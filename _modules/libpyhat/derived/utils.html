@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8">
+    
+    <title>libpyhat.derived.utils &mdash; PyHAT</title>
+    
+    <link rel="stylesheet" type="text/css" href="../../../_static/css/spc-bootstrap.css">
+    <link rel="stylesheet" type="text/css" href="../../../_static/css/spc-extend.css">
+    <link rel="stylesheet" href="../../../_static/scipy.css" type="text/css" >
+    <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" >
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../../',
+        VERSION:     '0.1.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../../_static/doctools.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/javascript" src="../../../_static/js/copybutton.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" >
+    <link rel="search" title="Search" href="../../../search.html" >
+    <link rel="top" title="PyHAT" href="../../../index.html" >
+    <link rel="up" title="Module code" href="../../index.html" > 
+  </head>
+  <body>
+
+  <div class="container">
+    <div class="header">
+    </div>
+  </div>
+
+
+    <div class="container">
+      <div class="main">
+        
+	<div class="row-fluid">
+	  <div class="span12">
+	    <div class="spc-navbar">
+              
+    <ul class="nav nav-pills pull-left">
+	
+        <li class="active"><a href="../../../index.html">PyHAT</a></li>
+	
+          <li class="active"><a href="../../index.html" accesskey="U">Module code</a></li> 
+    </ul>
+              
+              
+    <ul class="nav nav-pills pull-right">
+      <li class="active">
+        <a href="../../../genindex.html" title="General Index"
+           accesskey="I">index</a>
+      </li>
+      <li class="active">
+        <a href="../../../py-modindex.html" title="Python Module Index"
+           >modules</a>
+      </li>
+    </ul>
+              
+	    </div>
+	  </div>
+	</div>
+        
+
+	<div class="row-fluid">
+      <div class="spc-rightsidebar span3">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="../../../index.html">
+              <img class="logo" src="../../../_static/favicon.png" alt="Logo">
+            </a></p>
+
+        </div>
+      </div>
+          <div class="span9">
+            
+        <div class="bodywrapper">
+          <div class="body" id="spc-section-body">
+            
+  <h1>Source code for libpyhat.derived.utils</h1><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">inspect</span>
+<span class="kn">from</span> <span class="nn">functools</span> <span class="k">import</span> <span class="n">wraps</span>
+
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">warnings</span>
+<span class="kn">from</span> <span class="nn">.m3</span> <span class="k">import</span> <span class="n">pipe_funcs</span> <span class="k">as</span> <span class="n">pf</span>
+
+<div class="viewcode-block" id="generic_func"><a class="viewcode-back" href="../../../library/derived/utils.html#libpyhat.derived.utils.generic_func">[docs]</a><span class="k">def</span> <span class="nf">generic_func</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">wavelengths</span><span class="p">,</span> <span class="n">kernels</span><span class="o">=</span><span class="p">{},</span> <span class="n">func</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">pass_wvs</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Using some form of data and a wavelength array. Get the bands associated</span>
+<span class="sd">    wtih each wavelength in wavelengths, create a subset of bands based off</span>
+<span class="sd">    of those wavelengths then hand the subset to the function.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    data : ndarray</span>
+<span class="sd">           (x, y, z) 3 dimensional numpy array of a spectra image</span>
+
+<span class="sd">    wv_array : iterable</span>
+<span class="sd">               A list of all possible wavelengths for a given spectral image</span>
+
+<span class="sd">    wavelengths : iterable</span>
+<span class="sd">                  List of wavelengths to use for the function</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    ----------</span>
+<span class="sd">    : func</span>
+<span class="sd">      Returns the result from the given function</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">kernels</span><span class="p">:</span>
+        <span class="n">subset</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">wvs</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">wavelengths</span>
+
+        <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">kernels</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="n">s</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">wvs</span><span class="o">-</span><span class="n">k</span><span class="p">)</span><span class="o">.</span><span class="n">argsort</span><span class="p">()[:</span><span class="n">v</span><span class="p">])</span>
+            <span class="n">subset</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">median</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">s</span><span class="p">,</span> <span class="p">:,</span> <span class="p">:],</span> <span class="n">axis</span><span class="o">=</span><span class="n">axis</span><span class="p">))</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">subset</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">subset</span> <span class="o">=</span> <span class="n">subset</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">subset</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">wavelengths</span><span class="p">,</span> <span class="p">:,</span> <span class="p">:]</span>
+
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">subset</span><span class="p">:</span>
+        <span class="n">i</span><span class="p">[</span><span class="n">i</span> <span class="o">==</span> <span class="n">data</span><span class="o">.</span><span class="n">no_data_value</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
+
+    <span class="k">if</span> <span class="n">pass_wvs</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">func</span><span class="p">(</span><span class="n">subset</span><span class="p">,</span> <span class="n">wavelengths</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">func</span><span class="p">(</span><span class="n">subset</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="compute_b_a"><a class="viewcode-back" href="../../../library/derived/utils.html#libpyhat.derived.utils.compute_b_a">[docs]</a><span class="k">def</span> <span class="nf">compute_b_a</span><span class="p">(</span><span class="n">wavelengths</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">    Given a set of three wavelengths compute there b and a values as per</span>
+<span class="sd">    the Viviano Beck CRISM Derived Products paper</span>
+<span class="sd">    (Revised CRISM spectral parameters and summary</span>
+<span class="sd">    products based on the currently detected</span>
+<span class="sd">    mineral diversity on Mars)</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    wavelengths : iterable</span>
+<span class="sd">        A list of three wavelength values</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    b : float</span>
+<span class="sd">        b value from the paper</span>
+
+<span class="sd">    a : float</span>
+<span class="sd">        a value from the paper</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+    <span class="n">wavelengths</span><span class="o">.</span><span class="n">sort</span><span class="p">()</span>
+    <span class="n">lambda_s</span><span class="p">,</span> <span class="n">lambda_c</span><span class="p">,</span> <span class="n">lambda_l</span> <span class="o">=</span> <span class="n">wavelengths</span>
+
+    <span class="n">b</span> <span class="o">=</span> <span class="p">(</span><span class="n">lambda_c</span> <span class="o">-</span> <span class="n">lambda_s</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="n">lambda_l</span> <span class="o">-</span> <span class="n">lambda_s</span><span class="p">)</span>
+    <span class="n">a</span> <span class="o">=</span> <span class="mf">1.0</span> <span class="o">-</span> <span class="n">b</span>
+    <span class="k">return</span> <span class="n">b</span><span class="p">,</span> <span class="n">a</span></div>
+
+<div class="viewcode-block" id="compute_slope"><a class="viewcode-back" href="../../../library/derived/utils.html#libpyhat.derived.utils.compute_slope">[docs]</a><span class="k">def</span> <span class="nf">compute_slope</span><span class="p">(</span><span class="n">x1</span><span class="p">,</span> <span class="n">x2</span><span class="p">,</span> <span class="n">y1</span><span class="p">,</span> <span class="n">y2</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">    Computes slope given two points on a line</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    x1 : float</span>
+<span class="sd">        First points x value</span>
+
+<span class="sd">    x2 : float</span>
+<span class="sd">        Second points x value</span>
+
+<span class="sd">    y1 : float</span>
+<span class="sd">        First points y value</span>
+
+<span class="sd">    y2 : float</span>
+<span class="sd">        Second points y value</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    : float</span>
+<span class="sd">        Slope between the two points</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+
+    <span class="k">return</span> <span class="p">(</span><span class="n">y2</span> <span class="o">-</span> <span class="n">y1</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="n">x2</span> <span class="o">-</span> <span class="n">x1</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="line_fit"><a class="viewcode-back" href="../../../library/derived/utils.html#libpyhat.derived.utils.line_fit">[docs]</a><span class="k">def</span> <span class="nf">line_fit</span><span class="p">(</span><span class="n">slope</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">b</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">    Finds the y value for a given x using a given slope and y intercept</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    slope : float</span>
+<span class="sd">        Slope of a line</span>
+
+<span class="sd">    x : float</span>
+<span class="sd">        Point along the x axis of a line</span>
+
+<span class="sd">    b : float</span>
+<span class="sd">        Y intercept of a line</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    : float</span>
+<span class="sd">        Y coordinate corresponding to the given x</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+    <span class="k">return</span> <span class="p">(</span><span class="n">slope</span> <span class="o">*</span> <span class="n">x</span><span class="p">)</span> <span class="o">+</span> <span class="n">b</span></div>
+
+<div class="viewcode-block" id="calc_bdi_band"><a class="viewcode-back" href="../../../library/derived/utils.html#libpyhat.derived.utils.calc_bdi_band">[docs]</a><span class="k">def</span> <span class="nf">calc_bdi_band</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">iteration</span><span class="p">,</span> <span class="n">initial_band</span><span class="p">,</span> <span class="n">step</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    data : ndarray</span>
+<span class="sd">           (n,m,p) array</span>
+
+<span class="sd">    wv_array : ndarray</span>
+<span class="sd">               (n,1) array of wavelengths that correspond to the p</span>
+<span class="sd">               dimension of the data array</span>
+
+<span class="sd">    iteration : int</span>
+<span class="sd">                Number of steps to add to the new band calculation</span>
+
+<span class="sd">    initial_band : int</span>
+<span class="sd">                   Initial band to use to calculate the new band</span>
+
+<span class="sd">    step : int</span>
+<span class="sd">           Length between bands to calculate</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">     : ndarray</span>
+<span class="sd">       the processed ndarray</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">y</span> <span class="o">=</span> <span class="n">initial_band</span> <span class="o">+</span> <span class="p">(</span><span class="n">step</span> <span class="o">*</span> <span class="n">iteration</span><span class="p">)</span>
+    <span class="n">wv_array</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">wavelengths</span>
+    <span class="n">vals</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">wavelengths</span> <span class="o">-</span> <span class="n">y</span><span class="p">)</span>
+    <span class="n">minidx</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">argmin</span><span class="p">(</span><span class="n">vals</span><span class="p">)</span>
+    <span class="n">wavelengths</span> <span class="o">=</span> <span class="p">[</span><span class="n">wv_array</span><span class="p">[</span><span class="n">minidx</span> <span class="o">-</span> <span class="mi">3</span><span class="p">],</span> <span class="n">y</span><span class="p">,</span> <span class="n">wv_array</span><span class="p">[</span><span class="n">minidx</span> <span class="o">+</span> <span class="mi">3</span><span class="p">]]</span>
+    <span class="n">wvlims</span> <span class="o">=</span> <span class="p">[</span><span class="n">wavelengths</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">y</span><span class="p">,</span> <span class="n">wavelengths</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]]</span>
+    <span class="k">return</span> <span class="n">generic_func</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">wavelengths</span><span class="p">,</span> <span class="n">func</span><span class="o">=</span><span class="n">pf</span><span class="o">.</span><span class="n">bdi_func</span><span class="p">,</span> <span class="n">pass_wvs</span><span class="o">=</span><span class="n">wvlims</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="bdi_generic"><a class="viewcode-back" href="../../../library/derived/utils.html#libpyhat.derived.utils.bdi_generic">[docs]</a><span class="k">def</span> <span class="nf">bdi_generic</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">upper_limit</span><span class="p">,</span> <span class="n">initial_band</span><span class="p">,</span> <span class="n">step</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    data : ndarray</span>
+<span class="sd">           (n,m,p) array</span>
+
+<span class="sd">    wv_array : ndarray</span>
+<span class="sd">               (n,1) array of wavelengths that correspond to the p</span>
+<span class="sd">               dimension of the data array</span>
+
+<span class="sd">    upper_limit : int</span>
+<span class="sd">                  Upper limit on the number of wavelengths to be used</span>
+
+<span class="sd">    initial_band : int</span>
+<span class="sd">                   The band to use as a starting point to extract the other</span>
+<span class="sd">                   0 to upper_limit bands</span>
+<span class="sd">    step : int</span>
+<span class="sd">           The step size inbetween the 0 to upper limit bands</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">     : ndarray</span>
+<span class="sd">       the processed ndarray</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">limit</span> <span class="o">=</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">upper_limit</span><span class="p">)</span>
+    <span class="n">band_list</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span> <span class="o">-</span> <span class="n">calc_bdi_band</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">i</span><span class="p">,</span> <span class="n">initial_band</span><span class="p">,</span> <span class="n">step</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">limit</span><span class="p">]</span>
+
+    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">band_list</span><span class="p">,</span> <span class="n">axis</span> <span class="o">=</span> <span class="mi">0</span><span class="p">)</span></div>
+
+<span class="k">def</span> <span class="nf">warn_m3</span><span class="p">(</span><span class="n">m3_func</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+    <span class="nd">@wraps</span><span class="p">(</span><span class="n">m3_func</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">call_warn</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="n">warnings</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span><span class="s1">&#39;Parameters involving some of the visible wavelengths ( &lt; 600 nm) are not recommended for use. Parameters modeled after Clementine data are also not recommended. Original parameter estimates for OH and H2O should NOT be included.&#39;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">m3_func</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">call_warn</span>
+
+<span class="k">def</span> <span class="nf">get_derived_funcs</span><span class="p">(</span><span class="n">package</span><span class="p">):</span>
+    <span class="n">derived_funcs</span> <span class="o">=</span> <span class="p">{}</span>
+
+    <span class="n">modules</span> <span class="o">=</span> <span class="n">inspect</span><span class="o">.</span><span class="n">getmembers</span><span class="p">(</span><span class="n">package</span><span class="p">,</span> <span class="n">inspect</span><span class="o">.</span><span class="n">ismodule</span><span class="p">)</span>
+
+    <span class="k">for</span> <span class="n">module</span> <span class="ow">in</span> <span class="n">modules</span><span class="p">:</span>
+        <span class="k">if</span> <span class="s2">&quot;funcs&quot;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">module</span><span class="p">[</span><span class="mi">0</span><span class="p">]:</span>
+            <span class="n">derived_funcs</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="n">inspect</span><span class="o">.</span><span class="n">getmembers</span><span class="p">(</span><span class="n">module</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">inspect</span><span class="o">.</span><span class="n">isfunction</span><span class="p">),</span> <span class="o">**</span><span class="n">derived_funcs</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">derived_funcs</span>
+</pre></div>
+
+          </div>
+        </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="container container-navbar-bottom">
+      <div class="spc-navbar">
+        
+      </div>
+    </div>
+    <div class="container">
+    <div class="footer">
+    <div class="row-fluid">
+    <ul class="inline pull-left">
+      <li>
+        &copy; Copyright 2018 - PyHAT Developers.
+      </li>
+      <li>
+      Last updated on Oct 23, 2018.
+      </li>
+      <li>
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.8.1.
+      </li>
+    </ul>
+    </div>
+    </div>
+    </div>
+  </body>
+</html>

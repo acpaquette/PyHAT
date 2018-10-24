@@ -1,0 +1,508 @@
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8">
+    
+    <title>Basic Derived Product Generation Through Built-in Methods &mdash; PyHAT</title>
+    
+    <link rel="stylesheet" type="text/css" href="../../../_static/css/spc-bootstrap.css">
+    <link rel="stylesheet" type="text/css" href="../../../_static/css/spc-extend.css">
+    <link rel="stylesheet" href="../../../_static/scipy.css" type="text/css" >
+    <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" >
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../../',
+        VERSION:     '0.1.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../../_static/doctools.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/javascript" src="../../../_static/js/copybutton.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" >
+    <link rel="search" title="Search" href="../../../search.html" >
+    <link rel="top" title="PyHAT" href="../../../index.html" >
+    <link rel="up" title="Working With M3 to Generate Derived Products" href="../index.html" >
+    <link rel="next" title="Advanced Product Generation" href="Advanced M3 Derived Product Generation.html" >
+    <link rel="prev" title="Working With M3 to Generate Derived Products" href="../index.html" > 
+  </head>
+  <body>
+
+  <div class="container">
+    <div class="header">
+    </div>
+  </div>
+
+
+    <div class="container">
+      <div class="main">
+        
+	<div class="row-fluid">
+	  <div class="span12">
+	    <div class="spc-navbar">
+              
+    <ul class="nav nav-pills pull-left">
+	
+        <li class="active"><a href="../../../index.html">PyHAT</a></li>
+	
+          <li class="active"><a href="../../index.html" >&lt;no title&gt;</a></li>
+          <li class="active"><a href="../index.html" accesskey="U">Working With M3 to Generate Derived Products</a></li> 
+    </ul>
+              
+              
+    <ul class="nav nav-pills pull-right">
+      <li class="active">
+        <a href="../../../genindex.html" title="General Index"
+           accesskey="I">index</a>
+      </li>
+      <li class="active">
+        <a href="../../../py-modindex.html" title="Python Module Index"
+           >modules</a>
+      </li>
+      <li class="active">
+        <a href="Advanced M3 Derived Product Generation.html" title="Advanced Product Generation"
+           accesskey="N">next</a>
+      </li>
+      <li class="active">
+        <a href="../index.html" title="Working With M3 to Generate Derived Products"
+           accesskey="P">previous</a>
+      </li>
+    </ul>
+              
+	    </div>
+	  </div>
+	</div>
+        
+
+	<div class="row-fluid">
+      <div class="spc-rightsidebar span3">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="../../../index.html">
+              <img class="logo" src="../../../_static/favicon.png" alt="Logo">
+            </a></p>
+  <h3><a href="../../../index.html">Table of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Basic Derived Product Generation Through Built-in Methods</a><ul>
+<li><a class="reference internal" href="#Methods-to-generate-a-dervied-m3-or-crism-product">Methods to generate a dervied m3 or crism product</a></li>
+<li><a class="reference internal" href="#Load-the-necessary-modules">Load the necessary modules</a></li>
+<li><a class="reference internal" href="#Getting-a-derived-product">Getting a derived product</a></li>
+<li><a class="reference internal" href="#First-Option">First Option</a></li>
+<li><a class="reference internal" href="#Second-Option">Second Option</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="../index.html"
+                        title="previous chapter">Working With M3 to Generate Derived Products</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="Advanced M3 Derived Product Generation.html"
+                        title="next chapter">Advanced Product Generation</a></p>
+  <h3>This Page</h3>
+  <div>
+    <a href="../../../_sources/users/tutorials/m3/Basic M3 Derived Product Generation.ipynb.txt"
+       rel="nofollow">Show Source</a>
+  </div>
+<div class="this-page-menu">
+  <a href="/scipy/docs/scipy-docs/users/tutorials/m3/Basic M3 Derived Product Generation.ipynb.rst">Edit page</a>
+</div>
+
+        </div>
+      </div>
+          <div class="span9">
+            
+        <div class="bodywrapper">
+          <div class="body" id="spc-section-body">
+            
+  
+<style>
+/* CSS for nbsphinx extension */
+
+/* remove conflicting styling from Sphinx themes */
+div.nbinput,
+div.nbinput div.prompt,
+div.nbinput div.input_area,
+div.nbinput div[class*=highlight],
+div.nbinput div[class*=highlight] pre,
+div.nboutput,
+div.nbinput div.prompt,
+div.nbinput div.output_area,
+div.nboutput div[class*=highlight],
+div.nboutput div[class*=highlight] pre {
+    background: none;
+    border: none;
+    padding: 0 0;
+    margin: 0;
+    box-shadow: none;
+}
+
+/* avoid gaps between output lines */
+div.nboutput div[class*=highlight] pre {
+    line-height: normal;
+}
+
+/* input/output containers */
+div.nbinput,
+div.nboutput {
+    display: -webkit-flex;
+    display: flex;
+    align-items: flex-start;
+    margin: 0;
+    width: 100%;
+}
+@media (max-width: 540px) {
+    div.nbinput,
+    div.nboutput {
+        flex-direction: column;
+    }
+}
+
+/* input container */
+div.nbinput {
+    padding-top: 5px;
+}
+
+/* last container */
+div.nblast {
+    padding-bottom: 5px;
+}
+
+/* input prompt */
+div.nbinput div.prompt pre {
+    color: #303F9F;
+}
+
+/* output prompt */
+div.nboutput div.prompt pre {
+    color: #D84315;
+}
+
+/* all prompts */
+div.nbinput div.prompt,
+div.nboutput div.prompt {
+    min-width: 9ex;
+    padding-top: 0.4em;
+    padding-right: 0.4em;
+    text-align: right;
+    flex: 0;
+}
+@media (max-width: 540px) {
+    div.nbinput div.prompt,
+    div.nboutput div.prompt {
+        text-align: left;
+        padding: 0.4em;
+    }
+    div.nboutput div.prompt.empty {
+        padding: 0;
+    }
+}
+
+/* disable scrollbars on prompts */
+div.nbinput div.prompt pre,
+div.nboutput div.prompt pre {
+    overflow: hidden;
+}
+
+/* input/output area */
+div.nbinput div.input_area,
+div.nboutput div.output_area {
+    padding: 0.4em;
+    -webkit-flex: 1;
+    flex: 1;
+    overflow: auto;
+}
+@media (max-width: 540px) {
+    div.nbinput div.input_area,
+    div.nboutput div.output_area {
+        width: 100%;
+    }
+}
+
+/* input area */
+div.nbinput div.input_area {
+    border: 1px solid #cfcfcf;
+    border-radius: 2px;
+    background: #f7f7f7;
+}
+
+/* override MathJax center alignment in output cells */
+div.nboutput div[class*=MathJax] {
+    text-align: left !important;
+}
+
+/* override sphinx.ext.pngmath center alignment in output cells */
+div.nboutput div.math p {
+    text-align: left;
+}
+
+/* standard error */
+div.nboutput div.output_area.stderr {
+    background: #fdd;
+}
+
+/* ANSI colors */
+.ansi-black-fg { color: #3E424D; }
+.ansi-black-bg { background-color: #3E424D; }
+.ansi-black-intense-fg { color: #282C36; }
+.ansi-black-intense-bg { background-color: #282C36; }
+.ansi-red-fg { color: #E75C58; }
+.ansi-red-bg { background-color: #E75C58; }
+.ansi-red-intense-fg { color: #B22B31; }
+.ansi-red-intense-bg { background-color: #B22B31; }
+.ansi-green-fg { color: #00A250; }
+.ansi-green-bg { background-color: #00A250; }
+.ansi-green-intense-fg { color: #007427; }
+.ansi-green-intense-bg { background-color: #007427; }
+.ansi-yellow-fg { color: #DDB62B; }
+.ansi-yellow-bg { background-color: #DDB62B; }
+.ansi-yellow-intense-fg { color: #B27D12; }
+.ansi-yellow-intense-bg { background-color: #B27D12; }
+.ansi-blue-fg { color: #208FFB; }
+.ansi-blue-bg { background-color: #208FFB; }
+.ansi-blue-intense-fg { color: #0065CA; }
+.ansi-blue-intense-bg { background-color: #0065CA; }
+.ansi-magenta-fg { color: #D160C4; }
+.ansi-magenta-bg { background-color: #D160C4; }
+.ansi-magenta-intense-fg { color: #A03196; }
+.ansi-magenta-intense-bg { background-color: #A03196; }
+.ansi-cyan-fg { color: #60C6C8; }
+.ansi-cyan-bg { background-color: #60C6C8; }
+.ansi-cyan-intense-fg { color: #258F8F; }
+.ansi-cyan-intense-bg { background-color: #258F8F; }
+.ansi-white-fg { color: #C5C1B4; }
+.ansi-white-bg { background-color: #C5C1B4; }
+.ansi-white-intense-fg { color: #A1A6B2; }
+.ansi-white-intense-bg { background-color: #A1A6B2; }
+
+.ansi-default-inverse-fg { color: #FFFFFF; }
+.ansi-default-inverse-bg { background-color: #000000; }
+
+.ansi-bold { font-weight: bold; }
+.ansi-underline { text-decoration: underline; }
+</style>
+<div class="section" id="Basic-Derived-Product-Generation-Through-Built-in-Methods">
+<h1>Basic Derived Product Generation Through Built-in Methods<a class="headerlink" href="#Basic-Derived-Product-Generation-Through-Built-in-Methods" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="Methods-to-generate-a-dervied-m3-or-crism-product">
+<h2>Methods to generate a dervied m3 or crism product<a class="headerlink" href="#Methods-to-generate-a-dervied-m3-or-crism-product" title="Permalink to this headline">¶</a></h2>
+<ol class="arabic simple">
+<li>Calling the method on the read in data:<ul>
+<li>data.derived_product()</li>
+</ul>
+</li>
+<li>Passing the data to the derived product:<ul>
+<li>derived_produc(data)</li>
+</ul>
+</li>
+<li>Calling the derived_product_func and defining the bands to be used:<ul>
+<li>derived_product_func(data.loc[[list_of_bands]])</li>
+<li>derived_product_func(data.loc[[list_of_bands], [list_of_y_values],
+[list_of_x_values]])</li>
+</ul>
+</li>
+<li>Calling the generic_func and passing the associated parameters:<ul>
+<li>generic_func(data, [wavelengths], func=derived_product_func)</li>
+</ul>
+</li>
+</ol>
+<p>For a more detailed understanding of this structure checkout the
+documentation.</p>
+<div class="line-block">
+<div class="line">&nbsp;<strong>data</strong>: Object read in via plio on either m3 or crism images</div>
+<div class="line">&nbsp;<strong>derived_product</strong>: Name of the derived product like tilt or
+curvature</div>
+<div class="line">&nbsp;<strong>generic_func</strong>: Function that applies other functions to data</div>
+<div class="line">&nbsp;<strong>derived_product_func</strong>: Lower level function that performs the
+mathematical operations on the bands</div>
+</div>
+<p><strong>This notebook focuses on methods 1 and 2</strong></p>
+</div>
+<div class="section" id="Load-the-necessary-modules">
+<h2>Load the necessary modules<a class="headerlink" href="#Load-the-necessary-modules" title="Permalink to this headline">¶</a></h2>
+<div class="line-block">
+<div class="line">&nbsp;The functions to generate the derived products can be found in the
+libpyhat library, while the data needs to be read in through plio. The
+libpyhat functions can be applied in a variety of different ways
+giving jupyter notebook users more leverage when generating derived
+products.</div>
+<div class="line"><br /></div>
+<div class="line">&nbsp;To generate M3 products specifically we will need the M3 reader from
+plio along with some functions from the libpyhat library.</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>In [1]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="c1"># Uses any files found in the libpyhat example directory</span>
+<span class="c1"># DO NOT use this for your own images</span>
+<span class="kn">from</span> <span class="nn">libpyhat.examples</span> <span class="k">import</span> <span class="n">get_path</span>
+
+<span class="c1"># Import the data reader from plio</span>
+<span class="kn">from</span> <span class="nn">plio.io.io_moon_minerology_mapper</span> <span class="k">import</span> <span class="n">M3</span>
+
+<span class="c1"># Setup some basic ploting</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="o">%</span><span class="k">pylab</span> inline
+<span class="n">figsize</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span><span class="mi">10</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Populating the interactive namespace from numpy and matplotlib
+</pre></div></div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>In [2]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="c1"># Read the data in using the M3 object from plio</span>
+<span class="n">m3_data</span> <span class="o">=</span> <span class="n">M3</span><span class="p">(</span><span class="n">get_path</span><span class="p">(</span><span class="s2">&quot;M3_4030seg_L2_aristcrater.tif&quot;</span><span class="p">))</span>
+<span class="n">m3_data</span><span class="o">.</span><span class="n">wavelengths</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>Out[2]:
+</pre></div>
+</div>
+<div class="output_area highlight-none notranslate"><div class="highlight"><pre>
+<span></span>array([ 540.84,  580.76,  620.69,  660.61,  700.54,  730.48,  750.44,
+        770.4 ,  790.37,  810.33,  830.29,  850.25,  870.21,  890.17,
+        910.14,  930.1 ,  950.06,  970.02,  989.98, 1009.95, 1029.91,
+       1049.87, 1069.83, 1089.79, 1109.76, 1129.72, 1149.68, 1169.64,
+       1189.6 , 1209.57, 1229.53, 1249.49, 1269.45, 1289.41, 1309.38,
+       1329.34, 1349.3 , 1369.26, 1389.22, 1409.19, 1429.15, 1449.11,
+       1469.07, 1489.03, 1508.99, 1528.96, 1548.92, 1578.86, 1618.79,
+       1658.71, 1698.63, 1738.56, 1778.48, 1818.4 , 1858.33, 1898.25,
+       1938.18, 1978.1 , 2018.02, 2057.95, 2097.87, 2137.8 , 2177.72,
+       2217.64, 2257.57, 2297.49, 2337.42, 2377.34, 2417.26, 2457.19,
+       2497.11, 2537.03, 2576.96, 2616.88, 2656.81, 2696.73, 2736.65,
+       2776.58, 2816.5 , 2856.43, 2896.35, 2936.27, 2976.2 ])
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="Getting-a-derived-product">
+<h2>Getting a derived product<a class="headerlink" href="#Getting-a-derived-product" title="Permalink to this headline">¶</a></h2>
+<div class="line-block">
+<div class="line">&nbsp;There are two ways to go about generateing a derived product from the
+built in functions in libpyhat.</div>
+</div>
+<ul><li><p>The first is calling the function on the M3 object directly. The M3
+object injects the functions from plio into itself using a function from
+libpyhat.</p>
+</li><li><p>The second is calling the function and passing in the data. This still
+requires the M3 object and simply changes the way the function call
+looks. The first option simply dispatches to the second option using
+some python magic.</p>
+</li></ul><div class="line-block">
+<div class="line">&nbsp;The main difference in the second option is that the function must be
+defined within the notebook, either through an import or direct
+creation from within the notebook.</div>
+</div>
+</div>
+<div class="section" id="First-Option">
+<h2>First Option<a class="headerlink" href="#First-Option" title="Permalink to this headline">¶</a></h2>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>In [3]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">res</span> <span class="o">=</span> <span class="n">m3_data</span><span class="o">.</span><span class="n">tilt</span><span class="p">()</span>
+<span class="n">imshow</span><span class="p">(</span><span class="n">res</span><span class="p">)</span>
+<span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../../../_images/users_tutorials_m3_Basic_M3_Derived_Product_Generation_7_0.png" src="../../../_images/users_tutorials_m3_Basic_M3_Derived_Product_Generation_7_0.png" />
+</div>
+</div>
+</div>
+<div class="section" id="Second-Option">
+<h2>Second Option<a class="headerlink" href="#Second-Option" title="Permalink to this headline">¶</a></h2>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>In [4]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="c1"># Import some function from m3 supplimental derived products</span>
+<span class="kn">from</span> <span class="nn">libpyhat.derived.m3.supplemental</span> <span class="k">import</span> <span class="n">tilt</span>
+
+<span class="n">res</span> <span class="o">=</span> <span class="n">tilt</span><span class="p">(</span><span class="n">m3_data</span><span class="p">)</span>
+<span class="n">imshow</span><span class="p">(</span><span class="n">res</span><span class="p">)</span>
+<span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../../../_images/users_tutorials_m3_Basic_M3_Derived_Product_Generation_9_0.png" src="../../../_images/users_tutorials_m3_Basic_M3_Derived_Product_Generation_9_0.png" />
+</div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>In [ ]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="container container-navbar-bottom">
+      <div class="spc-navbar">
+        
+      </div>
+    </div>
+    <div class="container">
+    <div class="footer">
+    <div class="row-fluid">
+    <ul class="inline pull-left">
+      <li>
+        &copy; Copyright 2018 - PyHAT Developers.
+      </li>
+      <li>
+      Last updated on Oct 23, 2018.
+      </li>
+      <li>
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.8.1.
+      </li>
+    </ul>
+    </div>
+    </div>
+    </div>
+  </body>
+</html>
