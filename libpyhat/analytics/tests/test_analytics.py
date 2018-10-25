@@ -42,4 +42,4 @@ def test_band_area():
 )
 def test_band_asymmetry(spectrum, expected_val):
     assymetry = analytics.band_asymmetry(spectrum)
-    assert assymetry == pytest.approx(expected_val)
+    assert assymetry == pytest.approx(expected_val, .01)
