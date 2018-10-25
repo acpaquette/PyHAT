@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8">
+    
+    <title>libpyhat.data.base &mdash; PyHAT</title>
+    
+    <link rel="stylesheet" type="text/css" href="../../../_static/css/spc-bootstrap.css">
+    <link rel="stylesheet" type="text/css" href="../../../_static/css/spc-extend.css">
+    <link rel="stylesheet" href="../../../_static/scipy.css" type="text/css" >
+    <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" >
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../../',
+        VERSION:     '0.1.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../../_static/doctools.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/javascript" src="../../../_static/js/copybutton.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" >
+    <link rel="search" title="Search" href="../../../search.html" >
+    <link rel="top" title="PyHAT" href="../../../index.html" >
+    <link rel="up" title="Module code" href="../../index.html" > 
+  </head>
+  <body>
+
+  <div class="container">
+    <div class="header">
+    </div>
+  </div>
+
+
+    <div class="container">
+      <div class="main">
+        
+	<div class="row-fluid">
+	  <div class="span12">
+	    <div class="spc-navbar">
+              
+    <ul class="nav nav-pills pull-left">
+	
+        <li class="active"><a href="../../../index.html">PyHAT</a></li>
+	
+          <li class="active"><a href="../../index.html" accesskey="U">Module code</a></li> 
+    </ul>
+              
+              
+    <ul class="nav nav-pills pull-right">
+      <li class="active">
+        <a href="../../../genindex.html" title="General Index"
+           accesskey="I">index</a>
+      </li>
+      <li class="active">
+        <a href="../../../py-modindex.html" title="Python Module Index"
+           >modules</a>
+      </li>
+    </ul>
+              
+	    </div>
+	  </div>
+	</div>
+        
+
+	<div class="row-fluid">
+      <div class="spc-rightsidebar span3">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="../../../index.html">
+              <img class="logo" src="../../../_static/favicon.png" alt="Logo">
+            </a></p>
+
+        </div>
+      </div>
+          <div class="span9">
+            
+        <div class="bodywrapper">
+          <div class="body" id="spc-section-body">
+            
+  <h1>Source code for libpyhat.data.base</h1><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">from</span> <span class="nn">pandas</span> <span class="k">import</span> <span class="n">Index</span><span class="p">,</span> <span class="n">concat</span>
+
+<span class="kn">from</span> <span class="nn">..transform</span> <span class="k">import</span> <span class="n">smooth</span><span class="p">,</span> <span class="n">continuum</span>
+
+<span class="kn">import</span> <span class="nn">libpyhat</span>
+
+<span class="k">def</span> <span class="nf">_spectral_unary_op</span><span class="p">(</span><span class="n">this</span><span class="p">,</span> <span class="n">new</span><span class="p">,</span> <span class="n">preserve_metadata</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Wrapper for funcs that should return a spectral type</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    this : obj</span>
+<span class="sd">           The parent or source Spectra/Spectrum that is operated on</span>
+
+<span class="sd">    new : obj</span>
+<span class="sd">          The return from the operation. Should be an ndarray, series,</span>
+<span class="sd">          or dataframe</span>
+
+<span class="sd">    preserve_metadata : bool</span>
+<span class="sd">                        Whether or not the metadata should be added to</span>
+<span class="sd">                        the returned object if any metadata is present</span>
+<span class="sd">                        on the parent (this) object. Default: True</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1"># Create the new class with the metadata obj, but the</span>
+    <span class="c1"># data only index</span>
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">this</span><span class="p">,</span> <span class="n">libpyhat</span><span class="o">.</span><span class="n">Spectrum</span><span class="p">):</span>
+        <span class="n">new</span> <span class="o">=</span> <span class="n">libpyhat</span><span class="o">.</span><span class="n">Spectrum</span><span class="p">(</span><span class="n">new</span><span class="p">,</span> <span class="n">wavelengths</span><span class="o">=</span><span class="n">this</span><span class="o">.</span><span class="n">wavelengths</span><span class="p">,</span>
+                        <span class="n">metadata</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                        <span class="n">tolerance</span><span class="o">=</span><span class="n">this</span><span class="o">.</span><span class="n">tolerance</span><span class="p">,</span>
+                        <span class="n">index</span><span class="o">=</span><span class="n">this</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">index</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">new</span> <span class="o">=</span> <span class="n">libpyhat</span><span class="o">.</span><span class="n">Spectra</span><span class="p">(</span><span class="n">new</span><span class="p">,</span> <span class="n">wavelengths</span><span class="o">=</span><span class="n">this</span><span class="o">.</span><span class="n">wavelengths</span><span class="p">,</span>
+            <span class="n">metadata</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+            <span class="n">tolerance</span><span class="o">=</span><span class="n">this</span><span class="o">.</span><span class="n">tolerance</span><span class="p">,</span>
+            <span class="n">index</span><span class="o">=</span><span class="n">this</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">index</span><span class="p">,</span>
+            <span class="n">columns</span><span class="o">=</span><span class="n">this</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">columns</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">preserve_metadata</span> <span class="ow">and</span> <span class="n">this</span><span class="o">.</span><span class="n">metadata</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">new</span> <span class="o">=</span> <span class="n">concat</span><span class="p">((</span><span class="n">new</span><span class="p">,</span> <span class="n">this</span><span class="o">.</span><span class="n">metadata</span><span class="p">))</span>
+        <span class="n">new</span><span class="o">.</span><span class="n">metadata</span> <span class="o">=</span> <span class="n">this</span><span class="o">.</span><span class="n">metadata</span><span class="o">.</span><span class="n">index</span>
+    <span class="k">return</span> <span class="n">new</span>
+
+<div class="viewcode-block" id="PyHatBase"><a class="viewcode-back" href="../../../library/data/base.html#libpyhat.data.base.PyHatBase">[docs]</a><span class="k">class</span> <span class="nc">PyHatBase</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    PyHAT Base class for other classes to inherit from.</span>
+
+<span class="sd">    attributes</span>
+<span class="sd">    ----------</span>
+
+<span class="sd">    tolerance : int</span>
+<span class="sd">                      Search window when looking for wavelengths</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="PyHatBase.continuum_correct"><a class="viewcode-back" href="../../../library/data/base.html#libpyhat.data.base.PyHatBase.continuum_correct">[docs]</a>    <span class="k">def</span> <span class="nf">continuum_correct</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">nodes</span><span class="o">=</span><span class="p">[],</span> <span class="n">correction_nodes</span><span class="o">=</span><span class="p">[],</span>
+                         <span class="n">func</span><span class="o">=</span><span class="n">continuum</span><span class="o">.</span><span class="n">linear</span><span class="p">,</span>
+                         <span class="n">preserve_metadata</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+                         <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Apply a continuum correction to all entries in the object.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        nodes : list</span>
+<span class="sd">                The nodes to use when applying the continuum correction as</span>
+<span class="sd">                the endpoints (linear and non-linear) or the nodes to use as</span>
+<span class="sd">                the domain (regression). Nodes are the label values in the</span>
+<span class="sd">                wavelength attributes. When not specified the first and last</span>
+<span class="sd">                wavelengths are utilized. For example, in the unspecified case</span>
+<span class="sd">                and a linear correction wavelengths[0] (the first) and</span>
+<span class="sd">                wavelengths[-1] (the final) values are used as the endpoints. More</span>
+<span class="sd">                than 2 nodes can be specified, resulting in a piecewise continuum.</span>
+<span class="sd">                For example, nodes=[500,1500,2000] will compute and apply 2 continuum,</span>
+<span class="sd">                one in the {500,1500} domain and one in the {1500,2000} domain.</span>
+
+<span class="sd">        correction_nodes : list</span>
+<span class="sd">                           By default, the computed continuum is applied to the nodes</span>
+<span class="sd">                           used in the computation. For example, if the continuum is</span>
+<span class="sd">                           computed on the domain {700,1500}, the spectrum will be corrected</span>
+<span class="sd">                           only on the domain {700,1500}. It is possible to pass correction</span>
+<span class="sd">                           nodes that force the correction to a different domain. For example,</span>
+<span class="sd">                           if nodes=[700,1500] and correction_nodes=[500,1500] then</span>
+<span class="sd">                           continuum is computed on the domain {700,1500} but applied to</span>
+<span class="sd">                           all observations in the domain {500,1500}</span>
+<span class="sd">        func : object</span>
+<span class="sd">               The continuum correction to apply. Default: linear</span>
+
+<span class="sd">        preserve_metadata : bool</span>
+<span class="sd">                            If True (the default) the object returned by this</span>
+<span class="sd">                            function will maintain any metadata that existed on</span>
+<span class="sd">                            the original object.  In other words, if a spectrum/spectra</span>
+<span class="sd">                            had metadata, the continuum corrected spectrum/spectra will</span>
+<span class="sd">                            also have the same metadata.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        res : object</span>
+<span class="sd">              A Spectrum or Spectra object depending on the required dimensionality.</span>
+
+<span class="sd">        denom : object</span>
+<span class="sd">                A Spectrum object containing the continuum fit indexed identically</span>
+<span class="sd">                to the res object.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">nodes</span><span class="p">:</span>
+            <span class="n">nodes</span> <span class="o">=</span> <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">wavelengths</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="bp">self</span><span class="o">.</span><span class="n">wavelengths</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]]</span>
+        <span class="n">res</span><span class="p">,</span> <span class="n">denom</span> <span class="o">=</span> <span class="n">continuum</span><span class="o">.</span><span class="n">continuum_correction</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">values</span><span class="p">,</span>
+                                                    <span class="bp">self</span><span class="o">.</span><span class="n">wavelengths</span><span class="p">,</span>
+                                                    <span class="n">nodes</span><span class="o">=</span><span class="n">nodes</span><span class="p">,</span>
+                                                    <span class="n">correction_nodes</span><span class="o">=</span><span class="n">correction_nodes</span><span class="p">,</span>
+                                                    <span class="n">correction</span><span class="o">=</span><span class="n">func</span><span class="p">,</span>
+                                                    <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+        <span class="n">res</span> <span class="o">=</span> <span class="n">_spectral_unary_op</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">res</span><span class="p">,</span> <span class="n">preserve_metadata</span><span class="o">=</span><span class="n">preserve_metadata</span><span class="p">)</span>
+        <span class="n">denom</span> <span class="o">=</span> <span class="n">_spectral_unary_op</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">denom</span><span class="p">,</span> <span class="n">preserve_metadata</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">res</span><span class="p">,</span> <span class="n">denom</span></div>
+
+
+    <span class="k">def</span> <span class="nf">smooth</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">func</span><span class="o">=</span><span class="n">smooth</span><span class="o">.</span><span class="n">boxcar</span><span class="p">,</span> <span class="n">preserve_metadata</span><span class="o">=</span><span class="s1">&#39;True&#39;</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="n">res</span> <span class="o">=</span> <span class="n">func</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">values</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">_spectral_unary_op</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">res</span><span class="p">,</span> <span class="n">preserve_metadata</span><span class="o">=</span><span class="n">preserve_metadata</span><span class="p">)</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">metadata</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_metadata_index</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">_metadata_index</span><span class="p">]</span>
+
+    <span class="nd">@metadata</span><span class="o">.</span><span class="n">setter</span>
+    <span class="k">def</span> <span class="nf">metadata</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">val</span><span class="p">):</span>
+        <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">val</span><span class="p">,</span> <span class="s1">&#39;__iter__&#39;</span><span class="p">)</span> <span class="ow">and</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">val</span><span class="p">,</span> <span class="p">(</span><span class="nb">str</span><span class="p">,</span> <span class="nb">bytes</span><span class="p">)):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_metadata_index</span> <span class="o">=</span> <span class="n">val</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">tolerance</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">hasattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s1">&#39;_tolerance&#39;</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_tolerance</span> <span class="o">=</span> <span class="mi">2</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_tolerance</span>
+
+    <span class="nd">@tolerance</span><span class="o">.</span><span class="n">setter</span>
+    <span class="k">def</span> <span class="nf">tolerance</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">val</span><span class="p">):</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">val</span><span class="p">,</span> <span class="nb">int</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_tolerance</span> <span class="o">=</span> <span class="n">val</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_reindex</span><span class="p">()</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">TypeError</span>
+
+    <span class="k">def</span> <span class="nf">_reindex</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">wavelengths</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">wv</span> <span class="o">=</span> <span class="n">Index</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">wavelengths</span><span class="p">,</span> <span class="n">decimals</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">tolerance</span><span class="p">))</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_metadata_index</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="n">index</span> <span class="o">=</span> <span class="n">wv</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">Index</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_metadata_index</span><span class="p">))</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">index</span> <span class="o">=</span> <span class="n">wv</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="c1"># This could be cleaner because if the df is square this will fail.</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">index</span> <span class="o">=</span> <span class="n">index</span>
+            <span class="k">except</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">columns</span> <span class="o">=</span> <span class="n">index</span></div>
+</pre></div>
+
+          </div>
+        </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="container container-navbar-bottom">
+      <div class="spc-navbar">
+        
+      </div>
+    </div>
+    <div class="container">
+    <div class="footer">
+    <div class="row-fluid">
+    <ul class="inline pull-left">
+      <li>
+        &copy; Copyright 2018 - PyHAT Developers.
+      </li>
+      <li>
+      Last updated on Oct 25, 2018.
+      </li>
+      <li>
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.8.1.
+      </li>
+    </ul>
+    </div>
+    </div>
+    </div>
+  </body>
+</html>
