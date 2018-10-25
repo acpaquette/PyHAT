@@ -1,0 +1,656 @@
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8">
+    
+    <title>Advanced Product Generation &mdash; PyHAT</title>
+    
+    <link rel="stylesheet" type="text/css" href="../../../_static/css/spc-bootstrap.css">
+    <link rel="stylesheet" type="text/css" href="../../../_static/css/spc-extend.css">
+    <link rel="stylesheet" href="../../../_static/scipy.css" type="text/css" >
+    <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" >
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../../',
+        VERSION:     '0.1.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../../_static/doctools.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/javascript" src="../../../_static/js/copybutton.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" >
+    <link rel="search" title="Search" href="../../../search.html" >
+    <link rel="top" title="PyHAT" href="../../../index.html" >
+    <link rel="up" title="Working With M3 to Generate Derived Products" href="../index.html" >
+    <link rel="next" title="Library Reference" href="../../../library/index.html" >
+    <link rel="prev" title="Basic Derived Product Generation Through Built-in Methods" href="Basic M3 Derived Product Generation.html" > 
+  </head>
+  <body>
+
+  <div class="container">
+    <div class="header">
+    </div>
+  </div>
+
+
+    <div class="container">
+      <div class="main">
+        
+	<div class="row-fluid">
+	  <div class="span12">
+	    <div class="spc-navbar">
+              
+    <ul class="nav nav-pills pull-left">
+	
+        <li class="active"><a href="../../../index.html">PyHAT</a></li>
+	
+          <li class="active"><a href="../../index.html" >&lt;no title&gt;</a></li>
+          <li class="active"><a href="../index.html" accesskey="U">Working With M3 to Generate Derived Products</a></li> 
+    </ul>
+              
+              
+    <ul class="nav nav-pills pull-right">
+      <li class="active">
+        <a href="../../../genindex.html" title="General Index"
+           accesskey="I">index</a>
+      </li>
+      <li class="active">
+        <a href="../../../py-modindex.html" title="Python Module Index"
+           >modules</a>
+      </li>
+      <li class="active">
+        <a href="../../../library/index.html" title="Library Reference"
+           accesskey="N">next</a>
+      </li>
+      <li class="active">
+        <a href="Basic M3 Derived Product Generation.html" title="Basic Derived Product Generation Through Built-in Methods"
+           accesskey="P">previous</a>
+      </li>
+    </ul>
+              
+	    </div>
+	  </div>
+	</div>
+        
+
+	<div class="row-fluid">
+      <div class="spc-rightsidebar span3">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="../../../index.html">
+              <img class="logo" src="../../../_static/favicon.png" alt="Logo">
+            </a></p>
+  <h3><a href="../../../index.html">Table of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Advanced Product Generation</a><ul>
+<li><a class="reference internal" href="#Methods-to-generate-a-dervied-m3-or-crism-product">Methods to generate a dervied m3 or crism product</a></li>
+<li><a class="reference internal" href="#Load-the-necessary-modules">Load the necessary modules</a></li>
+<li><a class="reference internal" href="#Custom-Wavelength-Selection">Custom Wavelength Selection</a></li>
+<li><a class="reference internal" href="#Custom-Wavelength-Selection-and-Function-Application-Via-generic_func">Custom Wavelength Selection and Function Application Via generic_func</a></li>
+<li><a class="reference internal" href="#Custom-Function-with-Wavelength-Selection">Custom Function with Wavelength Selection</a></li>
+<li><a class="reference internal" href="#Applying-Custom-Functions">Applying Custom Functions</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="Basic M3 Derived Product Generation.html"
+                        title="previous chapter">Basic Derived Product Generation Through Built-in Methods</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="../../../library/index.html"
+                        title="next chapter">Library Reference</a></p>
+  <h3>This Page</h3>
+  <div>
+    <a href="../../../_sources/users/tutorials/m3/Advanced M3 Derived Product Generation.ipynb.txt"
+       rel="nofollow">Show Source</a>
+  </div>
+<div class="this-page-menu">
+  <a href="/scipy/docs/scipy-docs/users/tutorials/m3/Advanced M3 Derived Product Generation.ipynb.rst">Edit page</a>
+</div>
+
+        </div>
+      </div>
+          <div class="span9">
+            
+        <div class="bodywrapper">
+          <div class="body" id="spc-section-body">
+            
+  
+<style>
+/* CSS for nbsphinx extension */
+
+/* remove conflicting styling from Sphinx themes */
+div.nbinput,
+div.nbinput div.prompt,
+div.nbinput div.input_area,
+div.nbinput div[class*=highlight],
+div.nbinput div[class*=highlight] pre,
+div.nboutput,
+div.nbinput div.prompt,
+div.nbinput div.output_area,
+div.nboutput div[class*=highlight],
+div.nboutput div[class*=highlight] pre {
+    background: none;
+    border: none;
+    padding: 0 0;
+    margin: 0;
+    box-shadow: none;
+}
+
+/* avoid gaps between output lines */
+div.nboutput div[class*=highlight] pre {
+    line-height: normal;
+}
+
+/* input/output containers */
+div.nbinput,
+div.nboutput {
+    display: -webkit-flex;
+    display: flex;
+    align-items: flex-start;
+    margin: 0;
+    width: 100%;
+}
+@media (max-width: 540px) {
+    div.nbinput,
+    div.nboutput {
+        flex-direction: column;
+    }
+}
+
+/* input container */
+div.nbinput {
+    padding-top: 5px;
+}
+
+/* last container */
+div.nblast {
+    padding-bottom: 5px;
+}
+
+/* input prompt */
+div.nbinput div.prompt pre {
+    color: #303F9F;
+}
+
+/* output prompt */
+div.nboutput div.prompt pre {
+    color: #D84315;
+}
+
+/* all prompts */
+div.nbinput div.prompt,
+div.nboutput div.prompt {
+    min-width: 9ex;
+    padding-top: 0.4em;
+    padding-right: 0.4em;
+    text-align: right;
+    flex: 0;
+}
+@media (max-width: 540px) {
+    div.nbinput div.prompt,
+    div.nboutput div.prompt {
+        text-align: left;
+        padding: 0.4em;
+    }
+    div.nboutput div.prompt.empty {
+        padding: 0;
+    }
+}
+
+/* disable scrollbars on prompts */
+div.nbinput div.prompt pre,
+div.nboutput div.prompt pre {
+    overflow: hidden;
+}
+
+/* input/output area */
+div.nbinput div.input_area,
+div.nboutput div.output_area {
+    padding: 0.4em;
+    -webkit-flex: 1;
+    flex: 1;
+    overflow: auto;
+}
+@media (max-width: 540px) {
+    div.nbinput div.input_area,
+    div.nboutput div.output_area {
+        width: 100%;
+    }
+}
+
+/* input area */
+div.nbinput div.input_area {
+    border: 1px solid #cfcfcf;
+    border-radius: 2px;
+    background: #f7f7f7;
+}
+
+/* override MathJax center alignment in output cells */
+div.nboutput div[class*=MathJax] {
+    text-align: left !important;
+}
+
+/* override sphinx.ext.pngmath center alignment in output cells */
+div.nboutput div.math p {
+    text-align: left;
+}
+
+/* standard error */
+div.nboutput div.output_area.stderr {
+    background: #fdd;
+}
+
+/* ANSI colors */
+.ansi-black-fg { color: #3E424D; }
+.ansi-black-bg { background-color: #3E424D; }
+.ansi-black-intense-fg { color: #282C36; }
+.ansi-black-intense-bg { background-color: #282C36; }
+.ansi-red-fg { color: #E75C58; }
+.ansi-red-bg { background-color: #E75C58; }
+.ansi-red-intense-fg { color: #B22B31; }
+.ansi-red-intense-bg { background-color: #B22B31; }
+.ansi-green-fg { color: #00A250; }
+.ansi-green-bg { background-color: #00A250; }
+.ansi-green-intense-fg { color: #007427; }
+.ansi-green-intense-bg { background-color: #007427; }
+.ansi-yellow-fg { color: #DDB62B; }
+.ansi-yellow-bg { background-color: #DDB62B; }
+.ansi-yellow-intense-fg { color: #B27D12; }
+.ansi-yellow-intense-bg { background-color: #B27D12; }
+.ansi-blue-fg { color: #208FFB; }
+.ansi-blue-bg { background-color: #208FFB; }
+.ansi-blue-intense-fg { color: #0065CA; }
+.ansi-blue-intense-bg { background-color: #0065CA; }
+.ansi-magenta-fg { color: #D160C4; }
+.ansi-magenta-bg { background-color: #D160C4; }
+.ansi-magenta-intense-fg { color: #A03196; }
+.ansi-magenta-intense-bg { background-color: #A03196; }
+.ansi-cyan-fg { color: #60C6C8; }
+.ansi-cyan-bg { background-color: #60C6C8; }
+.ansi-cyan-intense-fg { color: #258F8F; }
+.ansi-cyan-intense-bg { background-color: #258F8F; }
+.ansi-white-fg { color: #C5C1B4; }
+.ansi-white-bg { background-color: #C5C1B4; }
+.ansi-white-intense-fg { color: #A1A6B2; }
+.ansi-white-intense-bg { background-color: #A1A6B2; }
+
+.ansi-default-inverse-fg { color: #FFFFFF; }
+.ansi-default-inverse-bg { background-color: #000000; }
+
+.ansi-bold { font-weight: bold; }
+.ansi-underline { text-decoration: underline; }
+</style>
+<div class="section" id="Advanced-Product-Generation">
+<h1>Advanced Product Generation<a class="headerlink" href="#Advanced-Product-Generation" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="Methods-to-generate-a-dervied-m3-or-crism-product">
+<h2>Methods to generate a dervied m3 or crism product<a class="headerlink" href="#Methods-to-generate-a-dervied-m3-or-crism-product" title="Permalink to this headline">¶</a></h2>
+<ol class="arabic simple">
+<li>Calling the method on the read in data:<ul>
+<li>data.derived_product()</li>
+</ul>
+</li>
+<li>Passing the data to the derived product:<ul>
+<li>derived_produc(data)</li>
+</ul>
+</li>
+<li>Calling the derived_product_func and defining the bands to be used:<ul>
+<li>derived_product_func(data.loc[[list_of_bands]])</li>
+<li>derived_product_func(data.loc[[list_of_bands], [list_of_y_values],
+[list_of_x_values]])</li>
+</ul>
+</li>
+<li>Calling the generic_func and passing the associated parameters:<ul>
+<li>generic_func(data, [wavelengths], func=derived_product_func)</li>
+</ul>
+</li>
+</ol>
+<p>For a more detailed understanding of this structure checkout the
+documentation.</p>
+<div class="line-block">
+<div class="line">&nbsp;<strong>data</strong>: Object read in via plio on either m3 or crism images</div>
+<div class="line">&nbsp;<strong>derived_product</strong>: Name of the derived product like tilt or
+curvature</div>
+<div class="line">&nbsp;<strong>generic_func</strong>: Function that applies other functions to data</div>
+<div class="line">&nbsp;<strong>derived_product_func</strong>: Lower level function that performs the
+mathematical operations on the bands</div>
+</div>
+<p><strong>This notebook focuses on methods 3 and 4</strong></p>
+</div>
+<div class="section" id="Load-the-necessary-modules">
+<h2>Load the necessary modules<a class="headerlink" href="#Load-the-necessary-modules" title="Permalink to this headline">¶</a></h2>
+<div class="line-block">
+<div class="line">&nbsp;The functions to generate the derived products can be found in the
+libpyhat library, while the data needs to be read in through plio. The
+libpyhat functions can be applied in a variety of different ways
+giving jupyter notebook users more leverage when generating derived
+products.</div>
+<div class="line"><br /></div>
+<div class="line">&nbsp;To generate M3 products specifically we will need the M3 reader from
+plio along with some functions from the libpyhat library.</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>In [1]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="c1"># Uses any files found in the libpyhat example directory</span>
+<span class="c1"># DO NOT use this for your own images</span>
+<span class="kn">from</span> <span class="nn">libpyhat.examples</span> <span class="k">import</span> <span class="n">get_path</span>
+
+<span class="c1"># Import the data reader from plio</span>
+<span class="kn">from</span> <span class="nn">plio.io.io_moon_minerology_mapper</span> <span class="k">import</span> <span class="n">M3</span>
+
+<span class="c1"># Setup some basic ploting</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="o">%</span><span class="k">pylab</span> inline
+<span class="n">figsize</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span><span class="mi">10</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Populating the interactive namespace from numpy and matplotlib
+</pre></div></div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>In [2]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="c1"># Read the data in using the M3 object from plio</span>
+<span class="n">m3_data</span> <span class="o">=</span> <span class="n">M3</span><span class="p">(</span><span class="n">get_path</span><span class="p">(</span><span class="s2">&quot;M3_4030seg_L2_aristcrater.tif&quot;</span><span class="p">))</span>
+<span class="n">m3_data</span><span class="o">.</span><span class="n">wavelengths</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>Out[2]:
+</pre></div>
+</div>
+<div class="output_area highlight-none notranslate"><div class="highlight"><pre>
+<span></span>array([ 540.84,  580.76,  620.69,  660.61,  700.54,  730.48,  750.44,
+        770.4 ,  790.37,  810.33,  830.29,  850.25,  870.21,  890.17,
+        910.14,  930.1 ,  950.06,  970.02,  989.98, 1009.95, 1029.91,
+       1049.87, 1069.83, 1089.79, 1109.76, 1129.72, 1149.68, 1169.64,
+       1189.6 , 1209.57, 1229.53, 1249.49, 1269.45, 1289.41, 1309.38,
+       1329.34, 1349.3 , 1369.26, 1389.22, 1409.19, 1429.15, 1449.11,
+       1469.07, 1489.03, 1508.99, 1528.96, 1548.92, 1578.86, 1618.79,
+       1658.71, 1698.63, 1738.56, 1778.48, 1818.4 , 1858.33, 1898.25,
+       1938.18, 1978.1 , 2018.02, 2057.95, 2097.87, 2137.8 , 2177.72,
+       2217.64, 2257.57, 2297.49, 2337.42, 2377.34, 2417.26, 2457.19,
+       2497.11, 2537.03, 2576.96, 2616.88, 2656.81, 2696.73, 2736.65,
+       2776.58, 2816.5 , 2856.43, 2896.35, 2936.27, 2976.2 ])
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="Custom-Wavelength-Selection">
+<h2>Custom Wavelength Selection<a class="headerlink" href="#Custom-Wavelength-Selection" title="Permalink to this headline">¶</a></h2>
+<div class="line-block">
+<div class="line">&nbsp;Using custom indexing, specific wavelengths can be selected and used
+in the various derived product functions.</div>
+<div class="line"><br /></div>
+<div class="line">&nbsp;Tilt by default uses 930 and 1009 but this can be changed to apply
+tilt to which ever wavelengths necessary.</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>In [3]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="kn">from</span> <span class="nn">libpyhat.derived.m3.supplemental_funcs</span> <span class="k">import</span> <span class="n">tilt_func</span>
+
+<span class="c1"># Default</span>
+<span class="n">res</span> <span class="o">=</span> <span class="n">tilt_func</span><span class="p">(</span><span class="n">m3_data</span><span class="o">.</span><span class="n">loc</span><span class="p">[[</span><span class="mi">930</span><span class="p">,</span> <span class="mi">1009</span><span class="p">],</span> <span class="p">:,</span> <span class="p">:])</span>
+<span class="n">imshow</span><span class="p">(</span><span class="n">res</span><span class="p">)</span>
+<span class="n">show</span><span class="p">()</span>
+
+<span class="c1"># Apply tilt to wavelengths 540 and 850</span>
+<span class="n">res</span> <span class="o">=</span> <span class="n">tilt_func</span><span class="p">(</span><span class="n">m3_data</span><span class="o">.</span><span class="n">loc</span><span class="p">[[</span><span class="mi">540</span><span class="p">,</span> <span class="mi">850</span><span class="p">],</span> <span class="p">:,</span> <span class="p">:])</span>
+<span class="n">imshow</span><span class="p">(</span><span class="n">res</span><span class="p">)</span>
+<span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../../../_images/users_tutorials_m3_Advanced_M3_Derived_Product_Generation_6_0.png" src="../../../_images/users_tutorials_m3_Advanced_M3_Derived_Product_Generation_6_0.png" />
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../../../_images/users_tutorials_m3_Advanced_M3_Derived_Product_Generation_6_1.png" src="../../../_images/users_tutorials_m3_Advanced_M3_Derived_Product_Generation_6_1.png" />
+</div>
+</div>
+</div>
+<div class="section" id="Custom-Wavelength-Selection-and-Function-Application-Via-generic_func">
+<h2>Custom Wavelength Selection and Function Application Via generic_func<a class="headerlink" href="#Custom-Wavelength-Selection-and-Function-Application-Via-generic_func" title="Permalink to this headline">¶</a></h2>
+<div class="line-block">
+<div class="line">&nbsp;Similarly to the above example, generic_func allows users to select
+both the wavelengths to apply a function to along with other
+parameters like kernels, and if the wavelengths themselves should be
+passed along to the function</div>
+<div class="line"><br /></div>
+<div class="line">&nbsp;Again, tilt by default uses 930 and 1009 but this can be changed to
+apply tilt to which ever wavelengths necessary.</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>In [4]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="kn">from</span> <span class="nn">libpyhat.derived.utils</span> <span class="k">import</span> <span class="n">generic_func</span>
+<span class="kn">from</span> <span class="nn">libpyhat.derived.m3.supplemental_funcs</span> <span class="k">import</span> <span class="n">tilt_func</span>
+
+<span class="c1"># Default</span>
+<span class="n">res</span> <span class="o">=</span> <span class="n">generic_func</span><span class="p">(</span><span class="n">m3_data</span><span class="p">,</span> <span class="p">[</span><span class="mi">930</span><span class="p">,</span> <span class="mi">1009</span><span class="p">],</span> <span class="n">func</span> <span class="o">=</span> <span class="n">tilt_func</span><span class="p">)</span>
+<span class="n">imshow</span><span class="p">(</span><span class="n">res</span><span class="p">)</span>
+<span class="n">show</span><span class="p">()</span>
+
+<span class="c1"># Apply tilt to wavelengths 540 and 850</span>
+<span class="n">res</span> <span class="o">=</span> <span class="n">generic_func</span><span class="p">(</span><span class="n">m3_data</span><span class="p">,</span> <span class="p">[</span><span class="mi">540</span><span class="p">,</span> <span class="mi">850</span><span class="p">],</span> <span class="n">func</span> <span class="o">=</span> <span class="n">tilt_func</span><span class="p">)</span>
+<span class="n">imshow</span><span class="p">(</span><span class="n">res</span><span class="p">)</span>
+<span class="n">show</span><span class="p">()</span>
+
+<span class="c1"># Apply tilt to wavelengths 540 and 850, and kernels</span>
+<span class="n">res</span> <span class="o">=</span> <span class="n">generic_func</span><span class="p">(</span><span class="n">m3_data</span><span class="p">,</span> <span class="p">[</span><span class="mi">540</span><span class="p">,</span> <span class="mi">850</span><span class="p">],</span> <span class="n">kernels</span> <span class="o">=</span> <span class="p">{</span><span class="mi">540</span><span class="p">:</span> <span class="mi">11</span><span class="p">,</span> <span class="mi">850</span><span class="p">:</span> <span class="mi">11</span><span class="p">},</span> <span class="n">func</span> <span class="o">=</span> <span class="n">tilt_func</span><span class="p">)</span>
+<span class="n">imshow</span><span class="p">(</span><span class="n">res</span><span class="p">)</span>
+<span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../../../_images/users_tutorials_m3_Advanced_M3_Derived_Product_Generation_8_0.png" src="../../../_images/users_tutorials_m3_Advanced_M3_Derived_Product_Generation_8_0.png" />
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../../../_images/users_tutorials_m3_Advanced_M3_Derived_Product_Generation_8_1.png" src="../../../_images/users_tutorials_m3_Advanced_M3_Derived_Product_Generation_8_1.png" />
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../../../_images/users_tutorials_m3_Advanced_M3_Derived_Product_Generation_8_2.png" src="../../../_images/users_tutorials_m3_Advanced_M3_Derived_Product_Generation_8_2.png" />
+</div>
+</div>
+</div>
+<div class="section" id="Custom-Function-with-Wavelength-Selection">
+<h2>Custom Function with Wavelength Selection<a class="headerlink" href="#Custom-Function-with-Wavelength-Selection" title="Permalink to this headline">¶</a></h2>
+<div class="line-block">
+<div class="line">Using the generic_func, users can also write their own functions and
+apply them to some data set that has been read in.</div>
+<div class="line"><br /></div>
+<div class="line">Bellow we define a function called band_average. This function takes
+in a list of bands and puts both bands into their own variable and
+then gets the average between those two bands</div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>In [5]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="k">def</span> <span class="nf">band_average</span><span class="p">(</span><span class="n">data</span><span class="p">):</span>
+    <span class="n">band1</span><span class="p">,</span> <span class="n">band2</span> <span class="o">=</span> <span class="n">data</span>
+    <span class="k">return</span> <span class="p">(</span><span class="n">band1</span> <span class="o">+</span> <span class="n">band2</span><span class="p">)</span> <span class="o">/</span> <span class="mi">2</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>In [6]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="c1"># Showing the band1 we will be using</span>
+<span class="n">imshow</span><span class="p">(</span><span class="n">m3_data</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="mi">540</span><span class="p">])</span>
+<span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../../../_images/users_tutorials_m3_Advanced_M3_Derived_Product_Generation_11_0.png" src="../../../_images/users_tutorials_m3_Advanced_M3_Derived_Product_Generation_11_0.png" />
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>In [7]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="c1"># Showing the band2 we will be using</span>
+<span class="n">imshow</span><span class="p">(</span><span class="n">m3_data</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="mi">2976</span><span class="p">])</span>
+<span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../../../_images/users_tutorials_m3_Advanced_M3_Derived_Product_Generation_12_0.png" src="../../../_images/users_tutorials_m3_Advanced_M3_Derived_Product_Generation_12_0.png" />
+</div>
+</div>
+</div>
+<div class="section" id="Applying-Custom-Functions">
+<h2>Applying Custom Functions<a class="headerlink" href="#Applying-Custom-Functions" title="Permalink to this headline">¶</a></h2>
+<div class="line-block">
+<div class="line">&nbsp;Now that we have defined the function we need to apply it using
+generic_func. To do so, we need to define the wavelengths we want to
+use then pass the function to generic_func.</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>In [8]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="c1"># Get the result from generic_func</span>
+<span class="n">res</span> <span class="o">=</span> <span class="n">generic_func</span><span class="p">(</span><span class="n">m3_data</span><span class="p">,</span> <span class="p">[</span><span class="mi">540</span><span class="p">,</span> <span class="mi">2976</span><span class="p">],</span> <span class="n">func</span> <span class="o">=</span> <span class="n">band_average</span><span class="p">)</span>
+
+<span class="c1"># Get the 0, 0 value from both band1 and band2</span>
+<span class="n">band1_val</span> <span class="o">=</span> <span class="n">m3_data</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="mi">540</span><span class="p">][</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span>
+<span class="n">band2_val</span> <span class="o">=</span> <span class="n">m3_data</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="mi">2976</span><span class="p">][</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span>
+
+<span class="c1"># Check the result as if we applied the band_average function</span>
+<span class="c1"># Against the result from generic_func</span>
+<span class="nb">print</span><span class="p">((</span><span class="n">band1_val</span> <span class="o">+</span> <span class="n">band2_val</span><span class="p">)</span> <span class="o">/</span> <span class="mi">2</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">res</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">])</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Both should and are about the same if the band_average was applied correctly&quot;</span><span class="p">)</span>
+
+<span class="n">imshow</span><span class="p">(</span><span class="n">res</span><span class="p">)</span>
+<span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+0.13185182213783264
+0.13185182
+Both should and are about the same if the band_average was applied correctly
+</pre></div></div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../../../_images/users_tutorials_m3_Advanced_M3_Derived_Product_Generation_14_1.png" src="../../../_images/users_tutorials_m3_Advanced_M3_Derived_Product_Generation_14_1.png" />
+</div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>In [ ]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="container container-navbar-bottom">
+      <div class="spc-navbar">
+        
+      </div>
+    </div>
+    <div class="container">
+    <div class="footer">
+    <div class="row-fluid">
+    <ul class="inline pull-left">
+      <li>
+        &copy; Copyright 2018 - PyHAT Developers.
+      </li>
+      <li>
+      Last updated on Oct 23, 2018.
+      </li>
+      <li>
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.8.1.
+      </li>
+    </ul>
+    </div>
+    </div>
+    </div>
+  </body>
+</html>

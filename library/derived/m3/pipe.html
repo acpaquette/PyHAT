@@ -1,0 +1,971 @@
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8">
+    
+    <title>derived.m3.pipe — M3 Pipe Algorithms &mdash; PyHAT</title>
+    
+    <link rel="stylesheet" type="text/css" href="../../../_static/css/spc-bootstrap.css">
+    <link rel="stylesheet" type="text/css" href="../../../_static/css/spc-extend.css">
+    <link rel="stylesheet" href="../../../_static/scipy.css" type="text/css" >
+    <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" >
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../../',
+        VERSION:     '0.1.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../../_static/doctools.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/javascript" src="../../../_static/js/copybutton.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" >
+    <link rel="search" title="Search" href="../../../search.html" >
+    <link rel="top" title="PyHAT" href="../../../index.html" >
+    <link rel="up" title="derived.m3 — Moone Minerology Mapper Derived Data Products" href="index.html" >
+    <link rel="next" title="derived.crism — CRISM Derived Data Products" href="../crism/index.html" >
+    <link rel="prev" title="derived.m3.new — M3 New Algorithms" href="new.html" > 
+  </head>
+  <body>
+
+  <div class="container">
+    <div class="header">
+    </div>
+  </div>
+
+
+    <div class="container">
+      <div class="main">
+        
+	<div class="row-fluid">
+	  <div class="span12">
+	    <div class="spc-navbar">
+              
+    <ul class="nav nav-pills pull-left">
+	
+        <li class="active"><a href="../../../index.html">PyHAT</a></li>
+	
+          <li class="active"><a href="../../index.html" >Library Reference</a></li>
+          <li class="active"><a href="../index.html" ><code class="docutils literal notranslate"><span class="pre">derived</span></code> — Derived Data Products</a></li>
+          <li class="active"><a href="index.html" accesskey="U"><code class="docutils literal notranslate"><span class="pre">derived.m3</span></code> — Moone Minerology Mapper Derived Data Products</a></li> 
+    </ul>
+              
+              
+    <ul class="nav nav-pills pull-right">
+      <li class="active">
+        <a href="../../../genindex.html" title="General Index"
+           accesskey="I">index</a>
+      </li>
+      <li class="active">
+        <a href="../../../py-modindex.html" title="Python Module Index"
+           >modules</a>
+      </li>
+      <li class="active">
+        <a href="../crism/index.html" title="derived.crism — CRISM Derived Data Products"
+           accesskey="N">next</a>
+      </li>
+      <li class="active">
+        <a href="new.html" title="derived.m3.new — M3 New Algorithms"
+           accesskey="P">previous</a>
+      </li>
+    </ul>
+              
+	    </div>
+	  </div>
+	</div>
+        
+
+	<div class="row-fluid">
+      <div class="spc-rightsidebar span3">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="../../../index.html">
+              <img class="logo" src="../../../_static/favicon.png" alt="Logo">
+            </a></p>
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="new.html"
+                        title="previous chapter"><code class="docutils literal notranslate"><span class="pre">derived.m3.new</span></code> — M3 New Algorithms</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="../crism/index.html"
+                        title="next chapter"><code class="docutils literal notranslate"><span class="pre">derived.crism</span></code> — CRISM Derived Data Products</a></p>
+  <h3>This Page</h3>
+  <div>
+    <a href="../../../_sources/library/derived/m3/pipe.rst.txt"
+       rel="nofollow">Show Source</a>
+  </div>
+<div class="this-page-menu">
+  <a href="/scipy/docs/scipy-docs/library/derived/m3/pipe.rst.rst">Edit page</a>
+</div>
+
+        </div>
+      </div>
+          <div class="span9">
+            
+        <div class="bodywrapper">
+          <div class="body" id="spc-section-body">
+            
+  <div class="section" id="derived-m3-pipe-m3-pipe-algorithms">
+<h1><code class="xref py py-mod docutils literal notranslate"><span class="pre">derived.m3.pipe</span></code> — M3 Pipe Algorithms<a class="headerlink" href="#derived-m3-pipe-m3-pipe-algorithms" title="Permalink to this headline">¶</a></h1>
+<p>The <code class="xref py py-mod docutils literal notranslate"><span class="pre">derived.m3.pipe</span></code> module</p>
+<div class="versionadded">
+<p><span class="versionmodified">New in version 0.1.0.</span></p>
+</div>
+<span class="target" id="module-libpyhat.derived.m3.pipe"></span><dl class="function">
+<dt id="libpyhat.derived.m3.pipe.bd1050">
+<code class="descclassname">libpyhat.derived.m3.pipe.</code><code class="descname">bd1050</code><span class="sig-paren">(</span><em>data</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/libpyhat/derived/m3/pipe.html#bd1050"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#libpyhat.derived.m3.pipe.bd1050" title="Permalink to this definition">¶</a></dt>
+<dd><p>Name: BD1050
+Parameter: Band Depth at 1050 nm
+Formulation:
+Numerator = R1049
+Denominator = ((R1579 - R749) / (1579 - 749)) * (1049 - 749) + R749
+BD620 = 1 - [Numerator/Denominator]
+Rationale: OLV Comparison with Kaguya
+Bands: R749, R1049, R1579</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>data</strong> (<em>ndarray</em>) – (n,m,p) array</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">the processed ndarray</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">ndarray</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="libpyhat.derived.m3.pipe.bd1250">
+<code class="descclassname">libpyhat.derived.m3.pipe.</code><code class="descname">bd1250</code><span class="sig-paren">(</span><em>data</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/libpyhat/derived/m3/pipe.html#bd1250"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#libpyhat.derived.m3.pipe.bd1250" title="Permalink to this definition">¶</a></dt>
+<dd><p>Name: BD1250
+Parameter: Band Depth at 1250 nm
+Formulation:
+Numerator = R1249
+Denominator = ((R1579 - R749) / (1579 - 749)) * (1249 - 749) + R749
+BD620 = 1 - [Numerator/Denominator]
+Rationale: PLAG Comparison with Kaguya
+Bands: R749, R1249, R1579</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>data</strong> (<em>ndarray</em>) – (n,m,p) array</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">the processed ndarray</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">ndarray</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="libpyhat.derived.m3.pipe.bd1900">
+<code class="descclassname">libpyhat.derived.m3.pipe.</code><code class="descname">bd1900</code><span class="sig-paren">(</span><em>data</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/libpyhat/derived/m3/pipe.html#bd1900"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#libpyhat.derived.m3.pipe.bd1900" title="Permalink to this definition">¶</a></dt>
+<dd><p>Name: BD1900
+Parameter: Band Depth at 1900 nm: low Ca pyroxene index
+Formulation:
+Numerator = R1898
+Denominator = ((R2498 - R1408) / (2498 - 1408)) * (1898 - 1408) + R1408
+BD620 = 1 - [Numerator/Denominator]
+Rationale: pyroxene will be positive; favors LCP
+Bands: R1408, R1898, R2498</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>data</strong> (<em>ndarray</em>) – (n,m,p) array</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">the processed ndarray</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">ndarray</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="libpyhat.derived.m3.pipe.bd1umratio">
+<code class="descclassname">libpyhat.derived.m3.pipe.</code><code class="descname">bd1umratio</code><span class="sig-paren">(</span><em>data</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/libpyhat/derived/m3/pipe.html#bd1umratio"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#libpyhat.derived.m3.pipe.bd1umratio" title="Permalink to this definition">¶</a></dt>
+<dd><p>Name: BD1um Ratio
+Parameter: BD930 / BD990
+Formulation:
+BD930 = 1 - ((R929) / (((R1579 - R699)/(1579 - 699)) * (929-699) + R699))
+BD990 = 1 - ((R989) / (((R1579 - R699)/(1579 - 699)) * (989-699) + R699))
+BDRatio = BD930 / BD990
+Rationale: Possible Ti or impact melt
+Bands: R699, R929, R989, R1579</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>data</strong> (<em>ndarray</em>) – (n,m,p) array</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">the processed ndarray</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">ndarray</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="libpyhat.derived.m3.pipe.bd2300">
+<code class="descclassname">libpyhat.derived.m3.pipe.</code><code class="descname">bd2300</code><span class="sig-paren">(</span><em>data</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/libpyhat/derived/m3/pipe.html#bd2300"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#libpyhat.derived.m3.pipe.bd2300" title="Permalink to this definition">¶</a></dt>
+<dd><p>Name: BD2300
+Parameter: Band Depth at 2300 nm: low Ca pyroxene index
+Formulation:
+Numerator = R2298
+Denominator = ((R2578 - R1578) / (2578 - 1578)) * (2298 - 1578) + R1578
+BD620 = 1 - [Numerator/Denominator]
+Rationale: pyroxene will be positive; favors LCP
+Bands: R1578, R2298, R2578</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>data</strong> (<em>ndarray</em>) – (n,m,p) array</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">the processed ndarray</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">ndarray</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="libpyhat.derived.m3.pipe.bd2umratio">
+<code class="descclassname">libpyhat.derived.m3.pipe.</code><code class="descname">bd2umratio</code><span class="sig-paren">(</span><em>data</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/libpyhat/derived/m3/pipe.html#bd2umratio"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#libpyhat.derived.m3.pipe.bd2umratio" title="Permalink to this definition">¶</a></dt>
+<dd><p>Name: BD2um Ratio
+Parameter:2um band depth ratio
+Formulation:
+a = 1 - ((R1898) / (((R2578 - R1578)/(2578 - 1578)) * (1898-1578) + R1578))
+b = 1 - ((R2298) / (((R2578 - R1578)/(2578 - 1578)) * (2298-1578) + R1578))
+BD2um_ratio = a/b
+Rationale: Possible Ti or impact melt
+Bands: R1578, R1898,R2298, R2578</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>data</strong> (<em>ndarray</em>) – (n,m,p) array</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">the processed ndarray</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">ndarray</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="libpyhat.derived.m3.pipe.bd3000">
+<code class="descclassname">libpyhat.derived.m3.pipe.</code><code class="descname">bd3000</code><span class="sig-paren">(</span><em>data</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/libpyhat/derived/m3/pipe.html#bd3000"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#libpyhat.derived.m3.pipe.bd3000" title="Permalink to this definition">¶</a></dt>
+<dd><p>Name: BD3000
+Parameter: 3 um band depth using 2um continuum
+Formulation:
+Numerator = R2978
+Denominator = ((R2538 - R1578) / (2538 - 1578)) * (2978 - 1578) + R1578
+BD620 = 1 - [Numerator/Denominator]
+Rationale: H2O
+Bands: R1578, R2538, R2978</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>data</strong> (<em>ndarray</em>) – (n,m,p) array</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">the processed ndarray</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">ndarray</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="libpyhat.derived.m3.pipe.bd620">
+<code class="descclassname">libpyhat.derived.m3.pipe.</code><code class="descname">bd620</code><span class="sig-paren">(</span><em>data</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/libpyhat/derived/m3/pipe.html#bd620"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#libpyhat.derived.m3.pipe.bd620" title="Permalink to this definition">¶</a></dt>
+<dd><p>Name: BD620
+Parameter: Band Depth at 620 nm
+Formulation:
+Numerator = R619
+Denominator = ((R749 - R419) / (749 - 419)) * (619 - 419) + R419
+BD620 = 1 - [Numerator/Denominator]
+Rationale: Possible Ti or Impact Melt
+Bands: R419, R619, R749</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>data</strong> (<em>ndarray</em>) – (n,m,p) array</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">the processed ndarray</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">ndarray</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="libpyhat.derived.m3.pipe.bd950">
+<code class="descclassname">libpyhat.derived.m3.pipe.</code><code class="descname">bd950</code><span class="sig-paren">(</span><em>data</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/libpyhat/derived/m3/pipe.html#bd950"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#libpyhat.derived.m3.pipe.bd950" title="Permalink to this definition">¶</a></dt>
+<dd><p>Name: BD950
+Parameter: Band Depth at 950 nm
+Formulation:
+Numerator = R949
+Denominator = ((R1579 - R749) / (1579 - 749)) * (949 - 749) + R749
+BD620 = 1 - [Numerator/Denominator]
+Rationale: OPX Comparison with Kaguya
+Bands: R749, R949, R1579</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>data</strong> (<em>ndarray</em>) – (n,m,p) array</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">the processed ndarray</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">ndarray</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="libpyhat.derived.m3.pipe.bdi1000">
+<code class="descclassname">libpyhat.derived.m3.pipe.</code><code class="descname">bdi1000</code><span class="sig-paren">(</span><em>data</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/libpyhat/derived/m3/pipe.html#bdi1000"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#libpyhat.derived.m3.pipe.bdi1000" title="Permalink to this definition">¶</a></dt>
+<dd><p>Name: BDI1000
+Parameter: 1 um integrated band depth
+Formulation:
+BDI1000 = Sum with n values 0-26: (1 - [R(789 + 20n) / Rc(789 + 20n)])
+Rationale: Fe Mineralogy
+Bands: R789 - R1308 (in steps of 20)</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>data</strong> (<em>ndarray</em>) – (n,m,p) array</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">the processed ndarray</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">ndarray</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="libpyhat.derived.m3.pipe.bdi2000">
+<code class="descclassname">libpyhat.derived.m3.pipe.</code><code class="descname">bdi2000</code><span class="sig-paren">(</span><em>data</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/libpyhat/derived/m3/pipe.html#bdi2000"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#libpyhat.derived.m3.pipe.bdi2000" title="Permalink to this definition">¶</a></dt>
+<dd><p>Name: BDI2000
+Parameter: 2 um integrated band depth
+Formulation:
+BDI1000 = Sum with n values 0-21: (1 - [R(1658 + 40n) / Rc2(1658 + 40n)])
+Rationale: Fe Mineralogy
+Bands: R1658 - R2498 (in steps of 40)</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>data</strong> (<em>ndarray</em>) – (n,m,p) array</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">the processed ndarray</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">ndarray</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="libpyhat.derived.m3.pipe.hlnd_isfeo">
+<code class="descclassname">libpyhat.derived.m3.pipe.</code><code class="descname">hlnd_isfeo</code><span class="sig-paren">(</span><em>data</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/libpyhat/derived/m3/pipe.html#hlnd_isfeo"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#libpyhat.derived.m3.pipe.hlnd_isfeo" title="Permalink to this definition">¶</a></dt>
+<dd><p>Name: Hlnd_IsFeO
+Parameter: Optical Maturity Highlands
+Formulation:
+IsFeo = e ** [(1.82 - (R749/R889)) / 0.057]
+Rationale: Based on Fischer
+Bands: R1578, R2538</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>data</strong> (<em>ndarray</em>) – (n,m,p) array</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">the processed ndarray</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">ndarray</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="libpyhat.derived.m3.pipe.nbd1400">
+<code class="descclassname">libpyhat.derived.m3.pipe.</code><code class="descname">nbd1400</code><span class="sig-paren">(</span><em>data</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/libpyhat/derived/m3/pipe.html#nbd1400"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#libpyhat.derived.m3.pipe.nbd1400" title="Permalink to this definition">¶</a></dt>
+<dd><p>Name: NBD1400
+Parameter:1.4um OH Band
+Formulation:
+RC = (R1348 + R1578) / 2
+LC = (R1428 + R1448) / 2
+BB = R1408
+NBD1400 = 1 - 2 * (BB / (RC + LC))
+Rationale: H2O
+Bands: R1348, R1428, R1448, R1578</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>data</strong> (<em>ndarray</em>) – (n,m,p) array</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">the processed ndarray</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">ndarray</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="libpyhat.derived.m3.pipe.nbd1480">
+<code class="descclassname">libpyhat.derived.m3.pipe.</code><code class="descname">nbd1480</code><span class="sig-paren">(</span><em>data</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/libpyhat/derived/m3/pipe.html#nbd1480"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#libpyhat.derived.m3.pipe.nbd1480" title="Permalink to this definition">¶</a></dt>
+<dd><p>Name: NBD1480
+Parameter:1.48um OH Band
+Formulation:
+RC = (R1428 + R1448) / 2
+LC = (R1508 + R1528) / 2
+BB = R1488
+NBD1400 = 1 - 2 * (BB / (RC + LC))
+Rationale: H2O
+Bands: R1428, R1448, R1488, R1508, R1528</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>data</strong> (<em>ndarray</em>) – (n,m,p) array</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">the processed ndarray</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">ndarray</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="libpyhat.derived.m3.pipe.nbd2300">
+<code class="descclassname">libpyhat.derived.m3.pipe.</code><code class="descname">nbd2300</code><span class="sig-paren">(</span><em>data</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/libpyhat/derived/m3/pipe.html#nbd2300"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#libpyhat.derived.m3.pipe.nbd2300" title="Permalink to this definition">¶</a></dt>
+<dd><p>Name: NBD2300
+Parameter: 2.3um OH Band
+Formulation:
+RC = (R2218 + R2258) / 2
+LC = (R2378 + R2418) / 2
+BB = (R2298 + R2338) / 2
+NBD2300 = 1 - 2 * (BB / (RC + LC))
+Rationale: H2O
+Bands: R2218, R2258, R2378, R2418, R2298, R2338</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>data</strong> (<em>ndarray</em>) – (n,m,p) array</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">the processed ndarray</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">ndarray</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="libpyhat.derived.m3.pipe.nbd2700">
+<code class="descclassname">libpyhat.derived.m3.pipe.</code><code class="descname">nbd2700</code><span class="sig-paren">(</span><em>data</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/libpyhat/derived/m3/pipe.html#nbd2700"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#libpyhat.derived.m3.pipe.nbd2700" title="Permalink to this definition">¶</a></dt>
+<dd><p>Name: HBD2700
+Parameter:2.7um OH Band
+Formulation:
+RC = (R2578 + R2618 + R2658) / 3
+BB = (R2698 + R2738) / 2
+HBD2700 = 1 - (BB / RC)
+Rationale: H2O
+Bands: R2578, R2618, R2658, R2698, R2738</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>data</strong> (<em>ndarray</em>) – (n,m,p) array</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">the processed ndarray</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">ndarray</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="libpyhat.derived.m3.pipe.nbd2850">
+<code class="descclassname">libpyhat.derived.m3.pipe.</code><code class="descname">nbd2850</code><span class="sig-paren">(</span><em>data</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/libpyhat/derived/m3/pipe.html#nbd2850"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#libpyhat.derived.m3.pipe.nbd2850" title="Permalink to this definition">¶</a></dt>
+<dd><p>Name: HBD2850
+Parameter:3um Ice Band
+Formulation:
+RC = (R2538 + R2578 + R2618) / 3
+BB = (R2817 + R2857 + R2897) / 3
+HBD2700 = 1 - (BB / RC)
+Rationale: Ice
+Bands: R2538, R2578, R2618, R2817, R2857, R2897</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>data</strong> (<em>ndarray</em>) – (n,m,p) array</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">the processed ndarray</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">ndarray</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="libpyhat.derived.m3.pipe.olindex">
+<code class="descclassname">libpyhat.derived.m3.pipe.</code><code class="descname">olindex</code><span class="sig-paren">(</span><em>data</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/libpyhat/derived/m3/pipe.html#olindex"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#libpyhat.derived.m3.pipe.olindex" title="Permalink to this definition">¶</a></dt>
+<dd><p>Name: OLINDEX
+Parameter: Olivine Index
+Formulation:
+slope = (R1750 - R650) / (1750 - 650)
+a = 0.1 * [(slope * (860-650) + R650) / R860]
+b = 0.5 * [(slope * (1047-650) + R650) / R1047]
+c = 0.25 * [(slope * (1230-650) + R650) / R1230]
+OLINDEX = a + b + c
+Rationale: Olivine will be strongly positive
+Bands: R650, R860, R1047, R1230, R1750</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>data</strong> (<em>ndarray</em>) – (n,m,p) array</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">the processed ndarray</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">ndarray</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="libpyhat.derived.m3.pipe.oneum_min">
+<code class="descclassname">libpyhat.derived.m3.pipe.</code><code class="descname">oneum_min</code><span class="sig-paren">(</span><em>data</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/libpyhat/derived/m3/pipe.html#oneum_min"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#libpyhat.derived.m3.pipe.oneum_min" title="Permalink to this definition">¶</a></dt>
+<dd><p>Name: 1um_Min
+Parameter: 1 um band center
+Formulation:
+Rl = R Lambda
+1um_Min = Max of [1 - (R_lambda / Rc_lambda)] with wavelenghts between 890-1349 nm
+Rationale: Fe Mineralogy
+Bands: R890 - R1349</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>data</strong> (<em>ndarray</em>) – (n,m,p) array</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">the processed ndarray</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">ndarray</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="libpyhat.derived.m3.pipe.oneum_slope">
+<code class="descclassname">libpyhat.derived.m3.pipe.</code><code class="descname">oneum_slope</code><span class="sig-paren">(</span><em>data</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/libpyhat/derived/m3/pipe.html#oneum_slope"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#libpyhat.derived.m3.pipe.oneum_slope" title="Permalink to this definition">¶</a></dt>
+<dd><p>Name: 1um_Slope
+Parameter: continuum slope between 0.70 and 1.6 um
+Formulation:
+1um_Slope = (R1579 - R699) / (1579 - 699)
+Rationale: Vis-NIR Slope (%/nm)
+Bands: R699, R1579</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>data</strong> (<em>ndarray</em>) – (n,m,p) array</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">the processed ndarray</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">ndarray</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="libpyhat.derived.m3.pipe.oneum_sym">
+<code class="descclassname">libpyhat.derived.m3.pipe.</code><code class="descname">oneum_sym</code><span class="sig-paren">(</span><em>data</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/libpyhat/derived/m3/pipe.html#oneum_sym"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#libpyhat.derived.m3.pipe.oneum_sym" title="Permalink to this definition">¶</a></dt>
+<dd><p>Name: 1um_Sym
+Parameter: 1 um symmetry
+Formulation:
+a = 1um_min - short wavelength point found in 1um_FWHM
+b = long wavelength point found in 1um_FWHM - 1um_Min
+1um_Sym = b/a
+Rationale: Numbers greater than 1 may be enriched in olivine
+Bands: R(1um_Min), R(1um_FWHM)</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>data</strong> (<em>ndarray</em>) – (n,m,p) array</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">the processed ndarray</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">ndarray</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="libpyhat.derived.m3.pipe.r1580">
+<code class="descclassname">libpyhat.derived.m3.pipe.</code><code class="descname">r1580</code><span class="sig-paren">(</span><em>data</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/libpyhat/derived/m3/pipe.html#r1580"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#libpyhat.derived.m3.pipe.r1580" title="Permalink to this definition">¶</a></dt>
+<dd><p>Name: R1580
+Parameter: 1.6 um reflectance
+Formulation:
+R1580 = R1579
+Rationale: IR Albedo
+Bands: R1579</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>data</strong> (<em>ndarray</em>) – (n,m,p) array</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">the processed ndarray</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">ndarray</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="libpyhat.derived.m3.pipe.r2780">
+<code class="descclassname">libpyhat.derived.m3.pipe.</code><code class="descname">r2780</code><span class="sig-paren">(</span><em>data</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/libpyhat/derived/m3/pipe.html#r2780"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#libpyhat.derived.m3.pipe.r2780" title="Permalink to this definition">¶</a></dt>
+<dd><p>Name: R2780
+Parameter: 2.8 um reflectance
+Formulation:
+R750 = R2778
+Rationale: Reference I/F
+Bands: R2778</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>data</strong> (<em>ndarray</em>) – (n,m,p) array</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">the processed ndarray</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">ndarray</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="libpyhat.derived.m3.pipe.r540">
+<code class="descclassname">libpyhat.derived.m3.pipe.</code><code class="descname">r540</code><span class="sig-paren">(</span><em>data</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/libpyhat/derived/m3/pipe.html#r540"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#libpyhat.derived.m3.pipe.r540" title="Permalink to this definition">¶</a></dt>
+<dd><p>Name: R540
+Parameter: 0.55 um reflectance
+Formulation:
+R750 = R539
+Rationale: Reference I/F
+Bands: R539</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>data</strong> (<em>ndarray</em>) – (n,m,p) array</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">the processed ndarray</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">ndarray</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="libpyhat.derived.m3.pipe.r750">
+<code class="descclassname">libpyhat.derived.m3.pipe.</code><code class="descname">r750</code><span class="sig-paren">(</span><em>data</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/libpyhat/derived/m3/pipe.html#r750"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#libpyhat.derived.m3.pipe.r750" title="Permalink to this definition">¶</a></dt>
+<dd><p>Name: R750
+Parameter: 0.75 um reflectance
+Formulation:
+R750 = R749
+Rationale: Reference I/F
+Bands: R749</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>data</strong> (<em>ndarray</em>) – (n,m,p) array</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">the processed ndarray</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">ndarray</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="libpyhat.derived.m3.pipe.r950_750">
+<code class="descclassname">libpyhat.derived.m3.pipe.</code><code class="descname">r950_750</code><span class="sig-paren">(</span><em>data</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/libpyhat/derived/m3/pipe.html#r950_750"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#libpyhat.derived.m3.pipe.r950_750" title="Permalink to this definition">¶</a></dt>
+<dd><p>Name: R950_750
+Parameter: Ratio of 950nm to 750nm, mafic absorption
+Formulation:
+VISUV = R949/R749
+Rationale: Quick look at mafic absorption
+Bands: R749, R949</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>data</strong> (<em>ndarray</em>) – (n,m,p) array</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">the processed ndarray</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">ndarray</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="libpyhat.derived.m3.pipe.thermal_ratio">
+<code class="descclassname">libpyhat.derived.m3.pipe.</code><code class="descname">thermal_ratio</code><span class="sig-paren">(</span><em>data</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/libpyhat/derived/m3/pipe.html#thermal_ratio"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#libpyhat.derived.m3.pipe.thermal_ratio" title="Permalink to this definition">¶</a></dt>
+<dd><p>Name: Thermal_Ratio
+Parameter: N/A
+Formulation:
+Thermal_Ratio = R2538/2978
+Rationale: N/A
+Bands: R2538, R2978</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>data</strong> (<em>ndarray</em>) – (n,m,p) array</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">the processed ndarray</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">ndarray</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="libpyhat.derived.m3.pipe.thermal_slope">
+<code class="descclassname">libpyhat.derived.m3.pipe.</code><code class="descname">thermal_slope</code><span class="sig-paren">(</span><em>data</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/libpyhat/derived/m3/pipe.html#thermal_slope"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#libpyhat.derived.m3.pipe.thermal_slope" title="Permalink to this definition">¶</a></dt>
+<dd><p>Name: Thermal_Slope
+Parameter: N/A
+Formulation:
+21um_Slope = (R2978 - R2538) / (2978 - 2538)
+Rationale: Thermal Slope (% / nm)
+Bands: R1578, R2538</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>data</strong> (<em>ndarray</em>) – (n,m,p) array</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">the processed ndarray</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">ndarray</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="libpyhat.derived.m3.pipe.twoum_ratio">
+<code class="descclassname">libpyhat.derived.m3.pipe.</code><code class="descname">twoum_ratio</code><span class="sig-paren">(</span><em>data</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/libpyhat/derived/m3/pipe.html#twoum_ratio"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#libpyhat.derived.m3.pipe.twoum_ratio" title="Permalink to this definition">¶</a></dt>
+<dd><p>Name: 2um_Ratio
+Parameter: 2 um ratio
+Formulation:
+2um_Ratio = R1578/R2538
+Rationale: N/A
+Bands: R1578, R2538</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>data</strong> (<em>ndarray</em>) – (n,m,p) array</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">the processed ndarray</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">ndarray</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="libpyhat.derived.m3.pipe.twoum_slope">
+<code class="descclassname">libpyhat.derived.m3.pipe.</code><code class="descname">twoum_slope</code><span class="sig-paren">(</span><em>data</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/libpyhat/derived/m3/pipe.html#twoum_slope"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#libpyhat.derived.m3.pipe.twoum_slope" title="Permalink to this definition">¶</a></dt>
+<dd><p>Name: 2um_Slope
+Parameter: continuum slope between 1.6 and 2.5 um
+Formulation:
+21um_Slope = (R2538 - R1578) / (2538 - 1578)
+Rationale: NIR Slope
+Bands: R1578, R2538</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>data</strong> (<em>ndarray</em>) – (n,m,p) array</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">the processed ndarray</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">ndarray</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="libpyhat.derived.m3.pipe.uvvis">
+<code class="descclassname">libpyhat.derived.m3.pipe.</code><code class="descname">uvvis</code><span class="sig-paren">(</span><em>data</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/libpyhat/derived/m3/pipe.html#uvvis"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#libpyhat.derived.m3.pipe.uvvis" title="Permalink to this definition">¶</a></dt>
+<dd><p>Name: UVVIS
+Parameter: Ultraviolet Visible Ratio
+Formulation:
+VISUV = R419/R749
+Rationale: UV-Visible Spectral Ratio
+Bands: R419, R749</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>data</strong> (<em>ndarray</em>) – (n,m,p) array</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">the processed ndarray</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">ndarray</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="libpyhat.derived.m3.pipe.visnir">
+<code class="descclassname">libpyhat.derived.m3.pipe.</code><code class="descname">visnir</code><span class="sig-paren">(</span><em>data</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/libpyhat/derived/m3/pipe.html#visnir"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#libpyhat.derived.m3.pipe.visnir" title="Permalink to this definition">¶</a></dt>
+<dd><p>Name: VISNIR
+Parameter: Visible-nearIR Ratio
+Formulation:
+VISUV = R699/R1579
+Rationale: Optical Maturity and mare-highland
+Bands: R699, R1579</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>data</strong> (<em>ndarray</em>) – (n,m,p) array</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">the processed ndarray</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">ndarray</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="libpyhat.derived.m3.pipe.visslope">
+<code class="descclassname">libpyhat.derived.m3.pipe.</code><code class="descname">visslope</code><span class="sig-paren">(</span><em>data</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/libpyhat/derived/m3/pipe.html#visslope"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#libpyhat.derived.m3.pipe.visslope" title="Permalink to this definition">¶</a></dt>
+<dd><p>Name: Vis_Slope
+Parameter: UV-visible continuum slope
+Formulation:
+Vis_Slope = (R749 - R419) / (749 - 419)
+Rationale: UV-Vis Slope (%/nm)
+Bands: R419, R749</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>data</strong> (<em>ndarray</em>) – (n,m,p) array</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">the processed ndarray</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">ndarray</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="libpyhat.derived.m3.pipe.visuv">
+<code class="descclassname">libpyhat.derived.m3.pipe.</code><code class="descname">visuv</code><span class="sig-paren">(</span><em>data</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/libpyhat/derived/m3/pipe.html#visuv"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#libpyhat.derived.m3.pipe.visuv" title="Permalink to this definition">¶</a></dt>
+<dd><p>Name: VISUV
+Parameter: Ultraviolet Visible Ratio
+Formulation:
+VISUV = R749/R419
+Rationale: Visible-UV Spectral Ratio
+Bands: R419, R749</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>data</strong> (<em>ndarray</em>) – (n,m,p) array</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">the processed ndarray</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">ndarray</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
+
+
+          </div>
+        </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="container container-navbar-bottom">
+      <div class="spc-navbar">
+        
+      </div>
+    </div>
+    <div class="container">
+    <div class="footer">
+    <div class="row-fluid">
+    <ul class="inline pull-left">
+      <li>
+        &copy; Copyright 2018 - PyHAT Developers.
+      </li>
+      <li>
+      Last updated on Oct 23, 2018.
+      </li>
+      <li>
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.8.1.
+      </li>
+    </ul>
+    </div>
+    </div>
+    </div>
+  </body>
+</html>
