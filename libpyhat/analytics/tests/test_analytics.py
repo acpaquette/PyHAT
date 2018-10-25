@@ -1,49 +1,44 @@
-import unittest
+import pytest
 
 import numpy as np
 
 from libpyhat.analytics import analytics
 
+@pytest.fixture
+def setUp():
+    np.random.seed(seed=42)
+    return np.random.random(25)
 
-class Test_Analytics(unittest.TestCase):
-    np.random.seed(12345)
+def test_band_minima(setUp):
+    minidx, minvalue = analytics.band_minima(setUp)
+    assert minidx == 10
+    assert minvalue == pytest.approx(0.02058449)
 
-    def setUp(self):
-        self.series = np.random.random(25)
+@pytest.mark.parametrize("lower_bound, upper_bound, expected_idx, expected_val", [
+                                            (0, 7, 6, 0.05808361),
+                                            pytest.param(6, 1, 0, 0, marks=pytest.mark.xfail)]
+)
+def test_band_minima_bounds(lower_bound, upper_bound, expected_idx, expected_val, setUp):
+    minidx, minvalue = analytics.band_minima(setUp, lower_bound, upper_bound)
+    assert minidx == expected_idx
+    assert minvalue == pytest.approx(expected_val)
 
-    def test_band_minima(self):
-        minidx, minvalue = analytics.band_minima(self.series)
-        self.assertEqual(minidx, 19)
-        self.assertAlmostEqual(minvalue, 0.107322912)
+def test_band_center(setUp):
+    center, center_fit = analytics.band_center(setUp)
+    assert center_fit[0] == max(center_fit)
+    assert center_fit[-1] == min(center_fit)
+    assert center[0] == 22
 
-        minidx, minvalue = analytics.band_minima(self.series, 0, 7)
-        self.assertEqual(minidx, 0)
-        self.assertAlmostEqual(minvalue, 0.225637606)
+def test_band_area():
+    x = np.arange(-2, 2, 0.1)
+    y = x ** 2
+    parabola = y
+    area = analytics.band_area(parabola)
+    assert area == [370.5]
 
-        with self.assertRaises(ValueError):
-            minidx, minvalue = analytics.band_minima(self.series, 6, 1)
+def test_band_asymmetry(setUp):
+    assymetry = analytics.band_asymmetry(setUp)
+    assert assymetry == pytest.approx(0.99447513)
 
-    def test_band_center(self):
-        center, center_fit = analytics.band_center(self.series)
-        self.assertEqual(center[0], 6)
-        self.assertAlmostEqual(center[1], 0.51505549)
-        self.assertAlmostEqual(center_fit[0], 0.553834612)
-        self.assertAlmostEqual(center_fit[12], 0.542132017)
-        self.assertAlmostEqual(center_fit[23], 0.652578626)
-        self.assertAlmostEqual(center_fit.mean(), 0.561734550)
-        self.assertAlmostEqual(np.median(center_fit), 0.54642353)
-        self.assertAlmostEqual(center_fit.std(), 0.043854163)
-
-    def test_band_area(self):
-        x = np.arange(-2, 2, 0.1)
-        y = x ** 2
-        parabola = y
-        area = analytics.band_area(parabola)
-        self.assertEqual(area, [370.5])
-
-    def test_band_asymmetry(self):
-        assymetry = analytics.band_asymmetry(self.series)
-        self.assertAlmostEqual(assymetry, 0.99447513)
-
-        assymetry = analytics.band_asymmetry(np.ones(24))
-        self.assertEqual(assymetry, 1.0)
+    assymetry = analytics.band_asymmetry(np.ones(24))
+    assert assymetry == 1.0
