@@ -38,7 +38,7 @@ def test_band_area():
 
 @pytest.mark.parametrize("spectrum, expected_val", [
                                             (setUp(), 0.99447513),
-                                            (np.ones(24), 0.10497237569060773)]
+                                            (np.ones(24), 1)]
 )
 def test_band_asymmetry(spectrum, expected_val):
     assymetry = analytics.band_asymmetry(spectrum)

@@ -98,6 +98,8 @@ def band_asymmetry(spectrum, low_endmember=None, high_endmember=None):
         low_endmember = 0
     if not high_endmember:
         high_endmember = -1
+    else:
+        high_endmember += 1
 
     slice = spectrum[low_endmember:high_endmember]
 
