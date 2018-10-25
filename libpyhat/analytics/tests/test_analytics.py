@@ -36,9 +36,10 @@ def test_band_area():
     area = analytics.band_area(parabola)
     assert area == [370.5]
 
-def test_band_asymmetry(setUp):
-    assymetry = analytics.band_asymmetry(setUp)
-    assert assymetry == pytest.approx(0.99447513)
-
-    assymetry = analytics.band_asymmetry(np.ones(24))
-    assert assymetry == 1.0
+@pytest.mark.parametrize("spectrum, expected_val", [
+                                            (setUp(), 0.99447513),
+                                            (np.ones(24), 1.0)]
+)
+def test_band_asymmetry(spectrum, expected_val):
+    assymetry = analytics.band_asymmetry(spectrum)
+    assert assymetry == pytest.approx(expected_val)
