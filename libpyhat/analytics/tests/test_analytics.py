@@ -27,7 +27,7 @@ def test_band_center(setUp):
     center, center_fit = analytics.band_center(setUp)
     assert center_fit[0] == max(center_fit)
     assert center_fit[-1] == min(center_fit)
-    assert center[0] == 22
+    assert center[0] == 10
 
 def test_band_area():
     x = np.arange(-2, 2, 0.1)
@@ -37,9 +37,9 @@ def test_band_area():
     assert area == [370.5]
 
 @pytest.mark.parametrize("spectrum, expected_val", [
-                                            (setUp(), 0.99447513),
-                                            (np.ones(24), 1)]
+                                            (setUp(), 0.32432432),
+                                            (np.ones(24), 0)]
 )
 def test_band_asymmetry(spectrum, expected_val):
     assymetry = analytics.band_asymmetry(spectrum)
-    assert assymetry == pytest.approx(expected_val, .01)
+    assert assymetry == pytest.approx(expected_val)
