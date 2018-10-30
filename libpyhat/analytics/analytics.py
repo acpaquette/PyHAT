@@ -26,9 +26,9 @@ def band_minima(spectrum, low_endmember=None, high_endmember=None):
     minvalue : float
                The observed minimal value
     """
+
     if not low_endmember:
         low_endmember = 0
-
     if not high_endmember:
         high_endmember = spectrum.size
     else:
@@ -45,7 +45,6 @@ def band_center(spectrum, low_endmember=None, high_endmember=None, degree=3):
 
     if not low_endmember:
         low_endmember = 0
-
     if not high_endmember:
         high_endmember = spectrum.size
     else:
@@ -100,7 +99,6 @@ def band_asymmetry(spectrum, low_endmember=None, high_endmember=None, degree=3):
 
     if not low_endmember:
         low_endmember = 0
-
     if not high_endmember:
         high_endmember = spectrum.size
     else:
